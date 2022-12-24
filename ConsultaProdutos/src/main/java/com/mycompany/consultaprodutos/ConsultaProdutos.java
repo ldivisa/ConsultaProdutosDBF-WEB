@@ -11,6 +11,7 @@ import com.linuxense.javadbf.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -46,6 +47,7 @@ public class ConsultaProdutos {
 				//
 				//System.out.println(field.getName());
 			}
+                        
 
 			// Now, lets us start reading the rows
 
@@ -72,11 +74,15 @@ public class ConsultaProdutos {
 
 			// By now, we have iterated through all of the rows
 
-		} catch (DBFException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+		} 
+                catch (FileNotFoundException ex)
+                {
+                 JOptionPane.showMessageDialog(null, "Não encontrei o arquivo: "+ex);
+                 }
+                catch (DBFException e) {
+			JOptionPane.showMessageDialog(null, "Nao encontrei o arquivo: "+e);
 		}
+                
 		finally {
 			DBFUtils.close(reader);
 		}
