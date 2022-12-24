@@ -38,7 +38,7 @@
                         true
                     </addClasspath>
                     <mainClass>
-                      com.mycompany.consultaprodutos.frmConsultadePreços
+                      com.mycompany.consultaprodutos.frmConsultadePrecos
                     </mainClass>
                 </manifest>
                     

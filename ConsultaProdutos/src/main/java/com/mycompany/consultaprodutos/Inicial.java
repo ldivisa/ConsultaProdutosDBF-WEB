@@ -10,6 +10,6 @@ package com.mycompany.consultaprodutos;
  */
 public class Inicial {
     public static void main(String[] args) {
-        new frmConsultadePreços();
+        new frmConsultadePrecos();
     }
 }
