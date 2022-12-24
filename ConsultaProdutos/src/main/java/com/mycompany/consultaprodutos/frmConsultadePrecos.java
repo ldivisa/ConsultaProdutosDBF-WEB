@@ -330,7 +330,7 @@ tb_CodigoaPesquisar.requestFocus();
                         lbl_descricao_bd.setText("Produto:");
                         lbl_Estoque.setText("Estoque:");
                         lbl_Preco.setText("Preco:");
-                        lbl_R$.setText("R$");
+                        lbl_R$.setText("$");
                         lbl_Estoque_Estoque_db.setText(String.valueOf(resultado.get(i).getEstoque()));
                         DecimalFormat df = new DecimalFormat("0.00");
                         lbl_Preco.setText(String.valueOf(df.format(resultado.get(i).getPreco())));
