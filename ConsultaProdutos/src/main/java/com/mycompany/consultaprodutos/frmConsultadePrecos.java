@@ -16,10 +16,10 @@ import static sun.jvm.hotspot.HelloWorld.e;
 public class frmConsultadePrecos extends javax.swing.JFrame {
          public ConsultaProdutos consulta;
          public List<Produtos> resultado = new ArrayList<>();
-
+         public int contador = 0;
          public frmConsultadePrecos() {
     
-
+    
      consulta = new ConsultaProdutos();
      resultado = consulta.ConsultarProduto();
      initComponents();
@@ -145,12 +145,11 @@ public class frmConsultadePrecos extends javax.swing.JFrame {
                             .addComponent(lbl_erro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(lbl_descricao_bd, javax.swing.GroupLayout.PREFERRED_SIZE, 972, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 57, Short.MAX_VALUE))
+                                .addGap(0, 51, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(lbl_Estoque)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lbl_Estoque_Estoque_db)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                .addComponent(lbl_Estoque_Estoque_db)))))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -303,7 +302,12 @@ atualizadados();        // TODO add your handling code here:
 
 
 public void rodarConsulta(){
-    
+    contador++;
+            if(contador>100)
+            {
+                atualizadados();
+                contador = 0;
+            }
 tb_CodigoaPesquisar.requestFocus();    
       if (tb_CodigoaPesquisar.getText().length()<5 && tb_CodigoaPesquisar.getText().length()>0)
       {        
