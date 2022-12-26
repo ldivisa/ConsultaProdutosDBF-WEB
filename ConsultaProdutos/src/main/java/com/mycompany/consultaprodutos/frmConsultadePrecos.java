@@ -4,7 +4,10 @@
  */
 package com.mycompany.consultaprodutos;
 import java.sql.ResultSet;
+import java.sql.Time;
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import static sun.jvm.hotspot.HelloWorld.e;
@@ -384,5 +387,10 @@ public void atualizadados()
 lbl_erro.setText("Buscando produtos...!");
     resultado = consulta.ConsultarProduto();
 lbl_erro.setText("Registros atualizados!");
+LocalDateTime localDateTime = LocalDateTime.now();
+String Hora = String.valueOf(localDateTime.toLocalTime());
+DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+String formattedDate = localDateTime.format(myFormatObj);
+setTitle("Pesquisa de produtos "+resultado.size()+" registros - Atualizado em: "+formattedDate);
 }
 }
