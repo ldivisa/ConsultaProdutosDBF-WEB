@@ -3,6 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.consultaprodutos;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.Time;
 import java.text.DecimalFormat;
@@ -10,6 +17,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import static sun.jvm.hotspot.HelloWorld.e;
 
 /**
@@ -17,11 +25,13 @@ import static sun.jvm.hotspot.HelloWorld.e;
  * @author Luiz
  */
 public class frmConsultadePrecos extends javax.swing.JFrame {
+         config objconfig = new config();
          public ConsultaProdutos consulta;
          public List<Produtos> resultado = new ArrayList<>();
          public int contador = 0;
          public frmConsultadePrecos() {
-    
+            // gravar();
+            // ler();
     
      consulta = new ConsultaProdutos();
      resultado = consulta.ConsultarProduto();
@@ -147,12 +157,13 @@ public class frmConsultadePrecos extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbl_erro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(lbl_descricao_bd, javax.swing.GroupLayout.PREFERRED_SIZE, 972, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 51, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(lbl_Estoque)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lbl_Estoque_Estoque_db)))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbl_descricao_bd, javax.swing.GroupLayout.PREFERRED_SIZE, 972, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(lbl_Estoque)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lbl_Estoque_Estoque_db)))
+                                .addGap(0, 51, Short.MAX_VALUE)))))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -252,6 +263,7 @@ atualizadados();        // TODO add your handling code here:
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -393,4 +405,40 @@ DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss
 String formattedDate = localDateTime.format(myFormatObj);
 setTitle("Pesquisa de produtos "+resultado.size()+" registros - Atualizado em: "+formattedDate);
 }
+
+class config implements Serializable
+{
+String caminho,teste;    }
+
+
+public void ler()
+{
+    try
+    {
+     FileInputStream arquivo = new FileInputStream("configura.txt");
+     ObjectInputStream objentrada =new ObjectInputStream(arquivo);
+     config dados = (config)objentrada.readObject();
+     JOptionPane.showMessageDialog(null, "caminho "+dados.caminho);
 }
+    
+    catch (Exception ex)
+    {
+               JOptionPane.showMessageDialog(null, ex);
+    }
+}
+public void gravar()
+{
+    objconfig.caminho="C:\\teste";
+    objconfig.teste="aaa";
+        try {
+          
+           FileOutputStream arquivo = new FileOutputStream("configura.txt");
+           ObjectOutputStream objsaida = new ObjectOutputStream(arquivo);
+           objsaida.writeObject(objconfig);
+           objsaida.flush();
+            JOptionPane.showMessageDialog(null, "Gravei o arquivo de configurações");       
+                   } catch (IOException ex) {
+            //0ogger.getLogger(ConsultaProdutos.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex);
+        }
+}}

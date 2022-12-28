@@ -6,11 +6,19 @@
 package com.mycompany.consultaprodutos;
 
 
-import java.io.*;
+
 import com.linuxense.javadbf.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 
@@ -19,12 +27,12 @@ import javax.swing.JOptionPane;
  * @author Luiz
  */
 public class ConsultaProdutos {
+ 
     public void ConsultaProdutos(){}
-	
+   	
     public List<Produtos> ConsultarProduto() {
                 List<Produtos> listagem = new ArrayList<>();
-                
-		DBFReader reader = null;
+                DBFReader reader = null;
 		try {
 
 			// create a DBFReader object
@@ -90,7 +98,5 @@ public class ConsultaProdutos {
         }
 
 
-}
-    
-    
 
+}
