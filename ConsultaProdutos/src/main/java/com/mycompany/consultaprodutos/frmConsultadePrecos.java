@@ -79,8 +79,6 @@ public class frmConsultadePrecos extends javax.swing.JFrame {
         setBackground(java.awt.Color.black);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setLocationByPlatform(true);
-        setMaximumSize(new java.awt.Dimension(1024, 768));
-        setPreferredSize(new java.awt.Dimension(1024, 768));
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
         jPanel1.setPreferredSize(new java.awt.Dimension(1024, 768));
@@ -188,7 +186,7 @@ public class frmConsultadePrecos extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_Estoque)
                     .addComponent(lbl_Estoque_Estoque_db))
-                .addContainerGap(117, Short.MAX_VALUE))
+                .addContainerGap(114, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(52, 52, 52)
@@ -252,7 +250,18 @@ public class frmConsultadePrecos extends javax.swing.JFrame {
     }//GEN-LAST:event_tb_CodigoaPesquisarPropertyChange
 
     private void tb_CodigoaPesquisarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_CodigoaPesquisarKeyReleased
-rodarConsulta();        // TODO add your handling code here:
+/*  var codigoTecla = evt.which || evt.keyCode || 0;
+  var space = codigoTecla == 32;
+  if (space) 
+      alert('O space foi pressionado!');
+  */
+if (evt.getKeyCode()==32||evt.getKeyCode()>=65 && evt.getKeyCode()<=99)
+    //System.out.print("espaco");
+    tb_CodigoaPesquisar.setText("");
+    //JOptionPane.showMessageDialog(null,"espaco apertado");
+else        
+    rodarConsulta();        // TODO add yr handling code here:
+
     }//GEN-LAST:event_tb_CodigoaPesquisarKeyReleased
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
