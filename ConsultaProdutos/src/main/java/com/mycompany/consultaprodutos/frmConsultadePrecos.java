@@ -18,7 +18,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import static sun.jvm.hotspot.HelloWorld.e;
+//import static sun.jvm.hotspot.HelloWorld.e;
 
 /**
  *
@@ -36,6 +36,7 @@ public class frmConsultadePrecos extends javax.swing.JFrame {
      consulta = new ConsultaProdutos();
      resultado = consulta.ConsultarProduto();
      initComponents();
+     painelCodigo.setVisible(true);
     //atualizadados();
                     lbl_descricao_bd.setText("");
                     lbl_Estoque.setText("");
@@ -47,7 +48,6 @@ public class frmConsultadePrecos extends javax.swing.JFrame {
                     tb_CodigoaPesquisar.setText("");
                     lbl_R$.setText("");
                     tb_CodigoaPesquisar.requestFocus();
-         
     }
 
     /**
@@ -59,8 +59,8 @@ public class frmConsultadePrecos extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLayeredPane1 = new javax.swing.JLayeredPane();
-        jPanel1 = new javax.swing.JPanel();
+        painelComAbas = new javax.swing.JTabbedPane();
+        painelCodigo = new javax.swing.JPanel();
         tb_CodigoaPesquisar = new javax.swing.JTextField();
         lbl_descricao_bd = new javax.swing.JLabel();
         lbl_R$ = new javax.swing.JLabel();
@@ -68,10 +68,12 @@ public class frmConsultadePrecos extends javax.swing.JFrame {
         lbl_Estoque = new javax.swing.JLabel();
         lbl_Estoque_Estoque_db = new javax.swing.JLabel();
         lbl_erro = new javax.swing.JLabel();
-        lbl_desciritvo1 = new javax.swing.JLabel();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        lbl_descritivo = new javax.swing.JLabel();
+        painelGeral = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        menuPrincipal = new javax.swing.JMenuBar();
+        menu1 = new javax.swing.JMenu();
+        menuAtualizar = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Pesquisa de produtos "+resultado.size()+" regsitros ");
@@ -80,14 +82,27 @@ public class frmConsultadePrecos extends javax.swing.JFrame {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setLocationByPlatform(true);
 
-        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
-        jPanel1.setPreferredSize(new java.awt.Dimension(1024, 768));
+        painelComAbas.setTabPlacement(javax.swing.JTabbedPane.BOTTOM);
+        painelComAbas.setAutoscrolls(true);
+        painelComAbas.setFocusCycleRoot(true);
+        painelComAbas.setInheritsPopupMenu(true);
+        painelComAbas.setMaximumSize(new java.awt.Dimension(1024, 768));
+
+        painelCodigo.setBackground(new java.awt.Color(0, 0, 0));
+        painelCodigo.setInheritsPopupMenu(true);
+        painelCodigo.setMaximumSize(new java.awt.Dimension(1024, 768));
+        painelCodigo.setPreferredSize(new java.awt.Dimension(1024, 768));
 
         tb_CodigoaPesquisar.setBackground(new java.awt.Color(153, 153, 153));
         tb_CodigoaPesquisar.setFont(new java.awt.Font("Arial", 0, 36)); // NOI18N
         tb_CodigoaPesquisar.setForeground(new java.awt.Color(255, 255, 255));
         tb_CodigoaPesquisar.setAutoscrolls(false);
         tb_CodigoaPesquisar.setSelectionStart(5);
+        tb_CodigoaPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tb_CodigoaPesquisarActionPerformed(evt);
+            }
+        });
         tb_CodigoaPesquisar.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 tb_CodigoaPesquisarPropertyChange(evt);
@@ -112,6 +127,7 @@ public class frmConsultadePrecos extends javax.swing.JFrame {
         lbl_Preco.setBackground(new java.awt.Color(0, 0, 204));
         lbl_Preco.setFont(new java.awt.Font("Arial", 0, 190)); // NOI18N
         lbl_Preco.setForeground(new java.awt.Color(255, 255, 0));
+        lbl_Preco.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_Preco.setText("Preco");
 
         lbl_Estoque.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
@@ -121,152 +137,141 @@ public class frmConsultadePrecos extends javax.swing.JFrame {
         lbl_Estoque_Estoque_db.setBackground(new java.awt.Color(0, 51, 51));
         lbl_Estoque_Estoque_db.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         lbl_Estoque_Estoque_db.setForeground(new java.awt.Color(255, 255, 0));
-        lbl_Estoque_Estoque_db.setText("jLabel6");
+        lbl_Estoque_Estoque_db.setText("ValorEstoque");
 
         lbl_erro.setBackground(new java.awt.Color(0, 51, 51));
         lbl_erro.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         lbl_erro.setForeground(new java.awt.Color(255, 255, 0));
         lbl_erro.setText("Erro");
 
-        lbl_desciritvo1.setBackground(new java.awt.Color(102, 102, 0));
-        lbl_desciritvo1.setFont(new java.awt.Font("Arial", 0, 36)); // NOI18N
-        lbl_desciritvo1.setForeground(new java.awt.Color(255, 255, 0));
-        lbl_desciritvo1.setText("Insira o código a pesquisar:");
+        lbl_descritivo.setBackground(new java.awt.Color(102, 102, 0));
+        lbl_descritivo.setFont(new java.awt.Font("Arial", 0, 36)); // NOI18N
+        lbl_descritivo.setForeground(new java.awt.Color(255, 255, 0));
+        lbl_descritivo.setText("Insira o código ou nome a pesquisar:");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(496, 496, 496)
-                                .addComponent(tb_CodigoaPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(lbl_R$)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lbl_Preco, javax.swing.GroupLayout.PREFERRED_SIZE, 725, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbl_erro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbl_descricao_bd, javax.swing.GroupLayout.PREFERRED_SIZE, 972, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(lbl_Estoque)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(lbl_Estoque_Estoque_db)))
-                                .addGap(0, 51, Short.MAX_VALUE)))))
-                .addContainerGap())
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(60, 60, 60)
-                    .addComponent(lbl_desciritvo1)
-                    .addContainerGap(569, Short.MAX_VALUE)))
+        javax.swing.GroupLayout painelCodigoLayout = new javax.swing.GroupLayout(painelCodigo);
+        painelCodigo.setLayout(painelCodigoLayout);
+        painelCodigoLayout.setHorizontalGroup(
+            painelCodigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelCodigoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(painelCodigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(painelCodigoLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(lbl_Estoque)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbl_Estoque_Estoque_db))
+                    .addGroup(painelCodigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(lbl_erro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelCodigoLayout.createSequentialGroup()
+                            .addGap(6, 6, 6)
+                            .addComponent(lbl_R$)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(lbl_Preco, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelCodigoLayout.createSequentialGroup()
+                            .addComponent(lbl_descritivo)
+                            .addGap(18, 18, 18)
+                            .addComponent(tb_CodigoaPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lbl_descricao_bd, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 767, Short.MAX_VALUE)))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addComponent(tb_CodigoaPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        painelCodigoLayout.setVerticalGroup(
+            painelCodigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelCodigoLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(painelCodigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lbl_descritivo)
+                    .addComponent(tb_CodigoaPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(painelCodigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_Preco, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbl_R$, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lbl_descricao_bd)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbl_erro, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_Estoque)
-                    .addComponent(lbl_Estoque_Estoque_db))
-                .addContainerGap(114, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(52, 52, 52)
-                    .addComponent(lbl_desciritvo1)
-                    .addContainerGap(504, Short.MAX_VALUE)))
+                .addGap(18, 18, 18)
+                .addGroup(painelCodigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_Estoque_Estoque_db)
+                    .addComponent(lbl_Estoque))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        tb_CodigoaPesquisar.getAccessibleContext().setAccessibleName("");
+        painelComAbas.addTab("Código", null, painelCodigo, "Pesquisa por Código");
 
-        jLayeredPane1.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        painelGeral.setToolTipText("Consulta Geral");
+        painelGeral.setName("painelGeral"); // NOI18N
 
-        javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
-        jLayeredPane1.setLayout(jLayeredPane1Layout);
-        jLayeredPane1Layout.setHorizontalGroup(
-            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1055, Short.MAX_VALUE)
+        jLabel1.setText("jLabel1");
+
+        javax.swing.GroupLayout painelGeralLayout = new javax.swing.GroupLayout(painelGeral);
+        painelGeral.setLayout(painelGeralLayout);
+        painelGeralLayout.setHorizontalGroup(
+            painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelGeralLayout.createSequentialGroup()
+                .addGap(324, 324, 324)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(424, Short.MAX_VALUE))
         );
-        jLayeredPane1Layout.setVerticalGroup(
-            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 598, Short.MAX_VALUE)
+        painelGeralLayout.setVerticalGroup(
+            painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelGeralLayout.createSequentialGroup()
+                .addGap(184, 184, 184)
+                .addComponent(jLabel1)
+                .addContainerGap(311, Short.MAX_VALUE))
         );
 
-        jMenu1.setText("Conexão");
+        painelComAbas.addTab("Descritivo", painelGeral);
 
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F12, 0));
-        jMenuItem1.setText("Atualizar");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        menu1.setText("Conexão");
+
+        menuAtualizar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F12, 0));
+        menuAtualizar.setText("Atualizar");
+        menuAtualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                menuAtualizarActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        menu1.add(menuAtualizar);
 
-        jMenuBar1.add(jMenu1);
+        menuPrincipal.add(menu1);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(menuPrincipal);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(painelComAbas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(painelComAbas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(800, 600));
+        painelComAbas.getAccessibleContext().setAccessibleName("Descritivo");
+
+        setSize(new java.awt.Dimension(800, 587));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void menuAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAtualizarActionPerformed
+        atualizadados();
+    }//GEN-LAST:event_menuAtualizarActionPerformed
+
+    private void tb_CodigoaPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tb_CodigoaPesquisarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tb_CodigoaPesquisarActionPerformed
+
     private void tb_CodigoaPesquisarPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tb_CodigoaPesquisarPropertyChange
-;     // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_tb_CodigoaPesquisarPropertyChange
 
     private void tb_CodigoaPesquisarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_CodigoaPesquisarKeyReleased
-/*  var codigoTecla = evt.which || evt.keyCode || 0;
-  var space = codigoTecla == 32;
-  if (space) 
-      alert('O space foi pressionado!');
-  */
-if (evt.getKeyCode()==32||evt.getKeyCode()>=65 && evt.getKeyCode()<=99)
-    //System.out.print("espaco");
-    tb_CodigoaPesquisar.setText("");
-    //JOptionPane.showMessageDialog(null,"espaco apertado");
-else        
-    rodarConsulta();        // TODO add yr handling code here:
-
+      rodarConsulta();
     }//GEN-LAST:event_tb_CodigoaPesquisarKeyReleased
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-atualizadados();        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -309,18 +314,20 @@ atualizadados();        // TODO add your handling code here:
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLayeredPane jLayeredPane1;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lbl_Estoque;
     private javax.swing.JLabel lbl_Estoque_Estoque_db;
     private javax.swing.JLabel lbl_Preco;
     private javax.swing.JLabel lbl_R$;
-    private javax.swing.JLabel lbl_desciritvo1;
     private javax.swing.JLabel lbl_descricao_bd;
+    private javax.swing.JLabel lbl_descritivo;
     private javax.swing.JLabel lbl_erro;
+    private javax.swing.JMenu menu1;
+    private javax.swing.JMenuItem menuAtualizar;
+    private javax.swing.JMenuBar menuPrincipal;
+    private javax.swing.JPanel painelCodigo;
+    private javax.swing.JTabbedPane painelComAbas;
+    private javax.swing.JPanel painelGeral;
     private javax.swing.JTextField tb_CodigoaPesquisar;
     // End of variables declaration//GEN-END:variables
 
@@ -335,21 +342,15 @@ public void rodarConsulta(){
 tb_CodigoaPesquisar.requestFocus();    
       if (tb_CodigoaPesquisar.getText().length()<5 && tb_CodigoaPesquisar.getText().length()>0)
       {        
-       
-        //System.out.print("\nTemos "+resultado.size()+" registros");
+       //System.out.print("\nTemos "+resultado.size()+" registros");
         lbl_Estoque_Estoque_db.setText("");
         lbl_Preco.setText("");
         lbl_descricao_bd.setText("");
         int codigopesquisado;
-       boolean sucesso = false;
-       
-        codigopesquisado = Integer.valueOf(tb_CodigoaPesquisar.getText());
-
-
-
-
-        
+        boolean sucesso = false;
+       codigopesquisado = Integer.valueOf(tb_CodigoaPesquisar.getText());
         if (codigopesquisado>0){ 
+            
                 for (int i = 0 ; i<resultado.size();i++)
                 {
                     if (Integer.valueOf(resultado.get(i).getCodigo())== codigopesquisado){
@@ -375,10 +376,6 @@ tb_CodigoaPesquisar.requestFocus();
                     limpatexto();
                 }
                  
-        
-        
-        
-       
 }
 } else
       {
@@ -405,8 +402,9 @@ public void limpatexto()
 
 public void atualizadados()
 {
+    System.out.println("\nEntrou em atualizadados...");
 lbl_erro.setText("Buscando produtos...!");
-    resultado = consulta.ConsultarProduto();
+resultado = consulta.ConsultarProduto();
 lbl_erro.setText("Registros atualizados!");
 LocalDateTime localDateTime = LocalDateTime.now();
 String Hora = String.valueOf(localDateTime.toLocalTime());
