@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.consultaprodutos;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -11,13 +12,22 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import static javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 //import static sun.jvm.hotspot.HelloWorld.e;
 
 /**
@@ -29,7 +39,10 @@ public class frmConsultadePrecos extends javax.swing.JFrame {
          public ConsultaProdutos consulta;
          public List<Produtos> resultado = new ArrayList<>();
          public int contador = 0;
-         public frmConsultadePrecos() {
+         public String pesquisado;
+//         public ArrayList listagemJtable;
+
+    public frmConsultadePrecos() {
             // gravar();
             // ler();
     
@@ -37,6 +50,7 @@ public class frmConsultadePrecos extends javax.swing.JFrame {
      resultado = consulta.ConsultarProduto();
      initComponents();
      painelCodigo.setVisible(true);
+     
     //atualizadados();
                     lbl_descricao_bd.setText("");
                     lbl_Estoque.setText("");
@@ -70,7 +84,10 @@ public class frmConsultadePrecos extends javax.swing.JFrame {
         lbl_erro = new javax.swing.JLabel();
         lbl_descritivo = new javax.swing.JLabel();
         painelGeral = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        tb_CodigoaPesquisar1 = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableProdutos = new javax.swing.JTable();
+        lbl_descritivo1 = new javax.swing.JLabel();
         menuPrincipal = new javax.swing.JMenuBar();
         menu1 = new javax.swing.JMenu();
         menuAtualizar = new javax.swing.JMenuItem();
@@ -147,7 +164,7 @@ public class frmConsultadePrecos extends javax.swing.JFrame {
         lbl_descritivo.setBackground(new java.awt.Color(102, 102, 0));
         lbl_descritivo.setFont(new java.awt.Font("Arial", 0, 36)); // NOI18N
         lbl_descritivo.setForeground(new java.awt.Color(255, 255, 0));
-        lbl_descritivo.setText("Insira o código ou nome a pesquisar:");
+        lbl_descritivo.setText("Insira o código a pesquisar:");
 
         javax.swing.GroupLayout painelCodigoLayout = new javax.swing.GroupLayout(painelCodigo);
         painelCodigo.setLayout(painelCodigoLayout);
@@ -168,18 +185,19 @@ public class frmConsultadePrecos extends javax.swing.JFrame {
                             .addComponent(lbl_R$)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(lbl_Preco, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelCodigoLayout.createSequentialGroup()
+                        .addGroup(painelCodigoLayout.createSequentialGroup()
                             .addComponent(lbl_descritivo)
                             .addGap(18, 18, 18)
-                            .addComponent(tb_CodigoaPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tb_CodigoaPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(78, 78, 78))
                         .addComponent(lbl_descricao_bd, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 767, Short.MAX_VALUE)))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
         painelCodigoLayout.setVerticalGroup(
             painelCodigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelCodigoLayout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addGroup(painelCodigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(23, 23, 23)
+                .addGroup(painelCodigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_descritivo)
                     .addComponent(tb_CodigoaPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -199,26 +217,91 @@ public class frmConsultadePrecos extends javax.swing.JFrame {
 
         painelComAbas.addTab("Código", null, painelCodigo, "Pesquisa por Código");
 
+        painelGeral.setBackground(new java.awt.Color(0, 51, 51));
         painelGeral.setToolTipText("Consulta Geral");
         painelGeral.setName("painelGeral"); // NOI18N
 
-        jLabel1.setText("jLabel1");
+        tb_CodigoaPesquisar1.setBackground(new java.awt.Color(153, 153, 153));
+        tb_CodigoaPesquisar1.setFont(new java.awt.Font("Arial", 0, 36)); // NOI18N
+        tb_CodigoaPesquisar1.setForeground(new java.awt.Color(255, 255, 255));
+        tb_CodigoaPesquisar1.setAutoscrolls(false);
+        tb_CodigoaPesquisar1.setSelectionStart(5);
+        tb_CodigoaPesquisar1.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                tb_CodigoaPesquisar1CaretUpdate(evt);
+            }
+        });
+        tb_CodigoaPesquisar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tb_CodigoaPesquisar1ActionPerformed(evt);
+            }
+        });
+        tb_CodigoaPesquisar1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                tb_CodigoaPesquisar1PropertyChange(evt);
+            }
+        });
+        tb_CodigoaPesquisar1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tb_CodigoaPesquisar1KeyReleased(evt);
+            }
+        });
+
+        jTableProdutos.setAutoCreateRowSorter(true);
+        jTableProdutos.setFont(new java.awt.Font("sansserif", 0, 22)); // NOI18N
+        jTableProdutos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Código do Produto", "Descritivo ", "Preço", "Quantidade em Estoque"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Integer.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jTableProdutos.setRowHeight(26);
+        jScrollPane1.setViewportView(jTableProdutos);
+
+        lbl_descritivo1.setBackground(new java.awt.Color(102, 102, 0));
+        lbl_descritivo1.setFont(new java.awt.Font("Arial", 0, 36)); // NOI18N
+        lbl_descritivo1.setForeground(new java.awt.Color(255, 255, 0));
+        lbl_descritivo1.setText("Insira parte da descrição do produto:");
 
         javax.swing.GroupLayout painelGeralLayout = new javax.swing.GroupLayout(painelGeral);
         painelGeral.setLayout(painelGeralLayout);
         painelGeralLayout.setHorizontalGroup(
             painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelGeralLayout.createSequentialGroup()
-                .addGap(324, 324, 324)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(424, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(painelGeralLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jScrollPane1))
+                    .addGroup(painelGeralLayout.createSequentialGroup()
+                        .addComponent(lbl_descritivo1, javax.swing.GroupLayout.PREFERRED_SIZE, 597, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tb_CodigoaPesquisar1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
         painelGeralLayout.setVerticalGroup(
             painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelGeralLayout.createSequentialGroup()
-                .addGap(184, 184, 184)
-                .addComponent(jLabel1)
-                .addContainerGap(311, Short.MAX_VALUE))
+                .addGap(30, 30, 30)
+                .addGroup(painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_descritivo1)
+                    .addComponent(tb_CodigoaPesquisar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         painelComAbas.addTab("Descritivo", painelGeral);
@@ -242,13 +325,13 @@ public class frmConsultadePrecos extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(painelComAbas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(painelComAbas, javax.swing.GroupLayout.DEFAULT_SIZE, 786, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(painelComAbas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(painelComAbas, javax.swing.GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE))
         );
 
         painelComAbas.getAccessibleContext().setAccessibleName("Descritivo");
@@ -272,6 +355,22 @@ public class frmConsultadePrecos extends javax.swing.JFrame {
     private void tb_CodigoaPesquisarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_CodigoaPesquisarKeyReleased
       rodarConsulta();
     }//GEN-LAST:event_tb_CodigoaPesquisarKeyReleased
+
+    private void tb_CodigoaPesquisar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tb_CodigoaPesquisar1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tb_CodigoaPesquisar1ActionPerformed
+
+    private void tb_CodigoaPesquisar1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tb_CodigoaPesquisar1PropertyChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tb_CodigoaPesquisar1PropertyChange
+
+    private void tb_CodigoaPesquisar1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_CodigoaPesquisar1KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tb_CodigoaPesquisar1KeyReleased
+
+    private void tb_CodigoaPesquisar1CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_tb_CodigoaPesquisar1CaretUpdate
+        rodarConsultaGeral();        
+    }//GEN-LAST:event_tb_CodigoaPesquisar1CaretUpdate
 
     /**
      * @param args the command line arguments
@@ -314,13 +413,15 @@ public class frmConsultadePrecos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTableProdutos;
     private javax.swing.JLabel lbl_Estoque;
     private javax.swing.JLabel lbl_Estoque_Estoque_db;
     private javax.swing.JLabel lbl_Preco;
     private javax.swing.JLabel lbl_R$;
     private javax.swing.JLabel lbl_descricao_bd;
     private javax.swing.JLabel lbl_descritivo;
+    private javax.swing.JLabel lbl_descritivo1;
     private javax.swing.JLabel lbl_erro;
     private javax.swing.JMenu menu1;
     private javax.swing.JMenuItem menuAtualizar;
@@ -329,6 +430,7 @@ public class frmConsultadePrecos extends javax.swing.JFrame {
     private javax.swing.JTabbedPane painelComAbas;
     private javax.swing.JPanel painelGeral;
     private javax.swing.JTextField tb_CodigoaPesquisar;
+    private javax.swing.JTextField tb_CodigoaPesquisar1;
     // End of variables declaration//GEN-END:variables
 
 
@@ -386,6 +488,51 @@ tb_CodigoaPesquisar.requestFocus();
      //impatexto();
       }         
 }
+
+public void rodarConsultaGeral(){
+    pesquisado = tb_CodigoaPesquisar1.getText().toUpperCase();
+    contador++;
+    //System.out.println("\n Resultado size: "+resultado.size());
+    if (resultado.size()>0){
+        DefaultTableModel modelo = (DefaultTableModel)jTableProdutos.getModel();
+        modelo.setNumRows(0);
+        jTableProdutos.getColumnModel().getColumn(0).setPreferredWidth(80);
+        jTableProdutos.getColumnModel().getColumn(1).setPreferredWidth(420);
+        jTableProdutos.getColumnModel().getColumn(2).setPreferredWidth(120);
+        jTableProdutos.getColumnModel().getColumn(3).setPreferredWidth(120);
+        jTableProdutos.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        jTableProdutos.setAutoCreateRowSorter(true);
+        
+        for(int i=0;i<=resultado.size()-1;i++){
+             // System.out.println("\n "+pesquisado+" - "+resultado.get(i).getNome()+" - "+resultado.get(i).getCodigo());
+           if (resultado.get(i).getCodigo().contains(pesquisado)||
+                    resultado.get(i).getNome().contains(pesquisado)){   
+            modelo.addRow(new Object[]{
+            resultado.get(i).getCodigo(),
+            resultado.get(i).getNome(),    
+            resultado.get(i).getPreco(),
+            resultado.get(i).getEstoque()
+                    });
+            }}}
+            
+            if(contador>100)
+            {
+                atualizadados();
+                contador = 0;
+            }
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(jTableProdutos.getModel());
+        jTableProdutos.setRowSorter(sorter);
+        List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+        int columnIndexToSort = 1;
+        sortKeys.add(new RowSorter.SortKey(columnIndexToSort, SortOrder.ASCENDING));
+        sorter.setSortKeys(sortKeys);
+        sorter.sort();
+        tb_CodigoaPesquisar1.requestFocus();    
+                }
+
+                 
+
+
 public void limpatexto()
 {
                     //_CodigoaPesquisar.setText(" ");
@@ -448,4 +595,7 @@ public void gravar()
             //0ogger.getLogger(ConsultaProdutos.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex);
         }
-}}
+
+
+}
+}
