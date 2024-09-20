@@ -436,11 +436,11 @@ public class frmConsultadePrecos extends javax.swing.JFrame {
 
 public void rodarConsulta(){
     contador++;
-            if(contador>100)
+            /*if(contador>100)
             {
                 atualizadados();
                 contador = 0;
-            }
+            }*/
 tb_CodigoaPesquisar.requestFocus();    
       if (tb_CodigoaPesquisar.getText().length()<5 && tb_CodigoaPesquisar.getText().length()>0)
       {        
@@ -515,11 +515,11 @@ public void rodarConsultaGeral(){
                     });
             }}}
             
-            if(contador>100)
+            /*if(contador>100)
             {
                 atualizadados();
                 contador = 0;
-            }
+            }*/
         TableRowSorter<TableModel> sorter = new TableRowSorter<>(jTableProdutos.getModel());
         jTableProdutos.setRowSorter(sorter);
         List<RowSorter.SortKey> sortKeys = new ArrayList<>();
