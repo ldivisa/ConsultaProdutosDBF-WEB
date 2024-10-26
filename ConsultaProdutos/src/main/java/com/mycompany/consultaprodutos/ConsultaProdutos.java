@@ -67,6 +67,10 @@ public class ConsultaProdutos {
                             Produtos produto = new Produtos();
                                         produto.setCodigo(rowObjects[0].toString());
                                         produto.setNome((String) rowObjects[2]);
+                                        if (rowObjects[1].toString().isEmpty()){
+                                            produto.setEAN13("0");} else {
+                                        produto.setEAN13(rowObjects[1].toString());}
+                                        
                                         produto.setPreco(Double.valueOf(rowObjects[7].toString()));
                                         produto.setEstoque(Double.valueOf(rowObjects[5].toString()));
                                         listagem.add(produto);

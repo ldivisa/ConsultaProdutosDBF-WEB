@@ -164,7 +164,7 @@ public class frmConsultadePrecos extends javax.swing.JFrame {
         lbl_descritivo.setBackground(new java.awt.Color(102, 102, 0));
         lbl_descritivo.setFont(new java.awt.Font("Arial", 0, 36)); // NOI18N
         lbl_descritivo.setForeground(new java.awt.Color(255, 255, 0));
-        lbl_descritivo.setText("Insira o código a pesquisar:");
+        lbl_descritivo.setText("Código/EAN:");
 
         javax.swing.GroupLayout painelCodigoLayout = new javax.swing.GroupLayout(painelCodigo);
         painelCodigo.setLayout(painelCodigoLayout);
@@ -180,18 +180,20 @@ public class frmConsultadePrecos extends javax.swing.JFrame {
                         .addComponent(lbl_Estoque_Estoque_db))
                     .addGroup(painelCodigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(lbl_erro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lbl_descricao_bd, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 767, Short.MAX_VALUE)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelCodigoLayout.createSequentialGroup()
                             .addGap(6, 6, 6)
-                            .addComponent(lbl_R$)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(lbl_Preco, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(painelCodigoLayout.createSequentialGroup()
-                            .addComponent(lbl_descritivo)
-                            .addGap(18, 18, 18)
-                            .addComponent(tb_CodigoaPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(78, 78, 78))
-                        .addComponent(lbl_descricao_bd, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 767, Short.MAX_VALUE)))
-                .addContainerGap(13, Short.MAX_VALUE))
+                            .addGroup(painelCodigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(painelCodigoLayout.createSequentialGroup()
+                                    .addComponent(lbl_descritivo)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(tb_CodigoaPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(painelCodigoLayout.createSequentialGroup()
+                                    .addComponent(lbl_R$)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(lbl_Preco, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
         painelCodigoLayout.setVerticalGroup(
             painelCodigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -442,20 +444,20 @@ public void rodarConsulta(){
                 contador = 0;
             }*/
 tb_CodigoaPesquisar.requestFocus();    
-      if (tb_CodigoaPesquisar.getText().length()<5 && tb_CodigoaPesquisar.getText().length()>0)
+      if (tb_CodigoaPesquisar.getText().length()<14 && tb_CodigoaPesquisar.getText().length()>0)
       {        
        //System.out.print("\nTemos "+resultado.size()+" registros");
         lbl_Estoque_Estoque_db.setText("");
         lbl_Preco.setText("");
         lbl_descricao_bd.setText("");
-        int codigopesquisado;
+        String codigopesquisado;
         boolean sucesso = false;
-       codigopesquisado = Integer.valueOf(tb_CodigoaPesquisar.getText());
-        if (codigopesquisado>0){ 
+       codigopesquisado = (tb_CodigoaPesquisar.getText());
+        if (codigopesquisado.length()>0){ 
             
                 for (int i = 0 ; i<resultado.size();i++)
                 {
-                    if (Integer.valueOf(resultado.get(i).getCodigo())== codigopesquisado){
+                    if ((resultado.get(i).getCodigo()).equals(codigopesquisado)||(resultado.get(i).getEAN13()).equalsIgnoreCase(codigopesquisado)){
                         sucesso=true;
                         lbl_erro.setText("");
                         lbl_descricao_bd.setText("Produto:");

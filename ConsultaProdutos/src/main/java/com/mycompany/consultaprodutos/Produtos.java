@@ -11,6 +11,7 @@ package com.mycompany.consultaprodutos;
 public class Produtos {
     private String codigo;
     private String nome;
+    private String EAN13;
     private double preco;
     private double estoque;
 
@@ -49,6 +50,14 @@ public class Produtos {
     @Override
     public String toString() {
         return "Produtos{" + "codigo=" + codigo + ", nome=" + nome + ", preco=" + preco + ", estoque=" + estoque + '}';
+    }
+
+    public String getEAN13() {
+        return EAN13;
+    }
+
+    public void setEAN13(String EAN13) {
+        this.EAN13 = EAN13;
     }
     
     
