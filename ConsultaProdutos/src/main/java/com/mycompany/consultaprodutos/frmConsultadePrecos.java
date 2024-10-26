@@ -114,7 +114,7 @@ public class frmConsultadePrecos extends javax.swing.JFrame {
         tb_CodigoaPesquisar.setFont(new java.awt.Font("Arial", 0, 36)); // NOI18N
         tb_CodigoaPesquisar.setForeground(new java.awt.Color(255, 255, 255));
         tb_CodigoaPesquisar.setAutoscrolls(false);
-        tb_CodigoaPesquisar.setSelectionStart(5);
+        tb_CodigoaPesquisar.setSelectionEnd(12);
         tb_CodigoaPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tb_CodigoaPesquisarActionPerformed(evt);
@@ -187,7 +187,7 @@ public class frmConsultadePrecos extends javax.swing.JFrame {
                                 .addGroup(painelCodigoLayout.createSequentialGroup()
                                     .addComponent(lbl_descritivo)
                                     .addGap(18, 18, 18)
-                                    .addComponent(tb_CodigoaPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tb_CodigoaPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGroup(painelCodigoLayout.createSequentialGroup()
                                     .addComponent(lbl_R$)
@@ -355,7 +355,10 @@ public class frmConsultadePrecos extends javax.swing.JFrame {
     }//GEN-LAST:event_tb_CodigoaPesquisarPropertyChange
 
     private void tb_CodigoaPesquisarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_CodigoaPesquisarKeyReleased
-      rodarConsulta();
+      if (tb_CodigoaPesquisar.getText().length()>13){
+      limpatexto();
+      }
+        rodarConsulta();
     }//GEN-LAST:event_tb_CodigoaPesquisarKeyReleased
 
     private void tb_CodigoaPesquisar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tb_CodigoaPesquisar1ActionPerformed
@@ -409,6 +412,7 @@ public class frmConsultadePrecos extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new frmConsultadePrecos().setVisible(true);
+                tb_CodigoaPesquisar.requestFocus();
                 
             }
         });
@@ -431,7 +435,7 @@ public class frmConsultadePrecos extends javax.swing.JFrame {
     private javax.swing.JPanel painelCodigo;
     private javax.swing.JTabbedPane painelComAbas;
     private javax.swing.JPanel painelGeral;
-    private javax.swing.JTextField tb_CodigoaPesquisar;
+    private static javax.swing.JTextField tb_CodigoaPesquisar;
     private javax.swing.JTextField tb_CodigoaPesquisar1;
     // End of variables declaration//GEN-END:variables
 
@@ -468,7 +472,7 @@ tb_CodigoaPesquisar.requestFocus();
                         DecimalFormat df = new DecimalFormat("0.00");
                         lbl_Preco.setText(String.valueOf(df.format(resultado.get(i).getPreco())));
                         lbl_descricao_bd.setText(String.valueOf(resultado.get(i).getNome()));
-                       
+                        
                     //System.out.print("\n "+String.valueOf(resultado.get(i).getNome()));
                                 break;
                 } 
