@@ -181,13 +181,13 @@ public class frmConsultadePrecos extends javax.swing.JFrame {
                                 .addGroup(painelCodigoLayout.createSequentialGroup()
                                     .addComponent(lbl_descritivo)
                                     .addGap(18, 18, 18)
-                                    .addComponent(tb_CodigoaPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(tb_CodigoaPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 0, Short.MAX_VALUE))
                                 .addGroup(painelCodigoLayout.createSequentialGroup()
                                     .addComponent(lbl_R$)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(lbl_Preco, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
         painelCodigoLayout.setVerticalGroup(
             painelCodigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -253,11 +253,11 @@ public class frmConsultadePrecos extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Código do Produto", "Descritivo ", "Preço", "Quantidade em Estoque"
+                "Código do Produto", "Descritivo ", "Preço", "Estoque"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -276,28 +276,23 @@ public class frmConsultadePrecos extends javax.swing.JFrame {
         painelGeral.setLayout(painelGeralLayout);
         painelGeralLayout.setHorizontalGroup(
             painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelGeralLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(painelGeralLayout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jScrollPane1))
-                    .addGroup(painelGeralLayout.createSequentialGroup()
-                        .addComponent(lbl_descritivo1, javax.swing.GroupLayout.PREFERRED_SIZE, 597, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tb_CodigoaPesquisar1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(10, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelGeralLayout.createSequentialGroup()
+                .addComponent(lbl_descritivo1, javax.swing.GroupLayout.PREFERRED_SIZE, 597, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tb_CodigoaPesquisar1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 764, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         painelGeralLayout.setVerticalGroup(
             painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelGeralLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(36, 36, 36)
                 .addGroup(painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_descritivo1)
-                    .addComponent(tb_CodigoaPesquisar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(tb_CodigoaPesquisar1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         painelComAbas.addTab("Descritivo", painelGeral);
@@ -321,7 +316,7 @@ public class frmConsultadePrecos extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(painelComAbas, javax.swing.GroupLayout.DEFAULT_SIZE, 786, Short.MAX_VALUE)
+            .addComponent(painelComAbas, javax.swing.GroupLayout.DEFAULT_SIZE, 812, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -464,7 +459,7 @@ tb_CodigoaPesquisar.requestFocus();
                         lbl_R$.setText("$");
                         lbl_Estoque_Estoque_db.setText(String.valueOf(resultado.get(i).getEstoque()));
                         DecimalFormat df = new DecimalFormat("0.00");
-                        lbl_Preco.setText(String.valueOf(df.format(resultado.get(i).getPreco())));
+                        lbl_Preco.setText((String.valueOf(df.format(resultado.get(i).getPreco()))));
                         lbl_descricao_bd.setText(String.valueOf(resultado.get(i).getNome()));
                         
                     //System.out.print("\n "+String.valueOf(resultado.get(i).getNome()));
@@ -507,11 +502,15 @@ public void rodarConsultaGeral(){
              // System.out.println("\n "+pesquisado+" - "+resultado.get(i).getNome()+" - "+resultado.get(i).getCodigo());
            if (resultado.get(i).getCodigo().contains(pesquisado)||
                     resultado.get(i).getNome().contains(pesquisado)){   
+                    String precoAtual;       
+                    DecimalFormat df = new DecimalFormat("0.00");
+                    precoAtual=("R$ "+String.valueOf(df.format(resultado.get(i).getPreco())));
+                    System.out.println("preco atual"+precoAtual);
             modelo.addRow(new Object[]{
-            resultado.get(i).getCodigo(),
-            resultado.get(i).getNome(),    
-            resultado.get(i).getPreco(),
-            resultado.get(i).getEstoque()
+                    resultado.get(i).getCodigo(),
+                    resultado.get(i).getNome(),    
+                    precoAtual,
+                    resultado.get(i).getEstoque()
                     });
             }}}
             
