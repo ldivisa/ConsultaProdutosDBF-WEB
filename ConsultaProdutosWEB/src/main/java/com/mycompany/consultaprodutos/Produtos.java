@@ -8,7 +8,8 @@ package com.mycompany.consultaprodutos;
  *
  * @author Luiz
  */
-public class Produtos {
+public class Produtos implements Comparable<Produtos>{
+    
     private String codigo;
     private String nome;
     private String EAN13;
@@ -59,6 +60,22 @@ public class Produtos {
     public void setEAN13(String EAN13) {
         this.EAN13 = EAN13;
     }
-    
-    
+
+    @Override
+    public int compareTo(Produtos o) {
+        /*if (Integer.parseInt(this.codigo) > (Integer.parseInt(o.getCodigo())))
+        return 1;
+        else 
+        if (Integer.parseInt(this.codigo) < (Integer.parseInt(o.getCodigo())))
+        return -1;
+        else
+        return 0;*/
+        if (this.nome.compareToIgnoreCase(o.getNome())>0)
+            return 1;
+        else
+            if (this.nome.compareToIgnoreCase(o.getNome())<0)
+            return -1;
+        else
+                return 0;
+    }
 }

@@ -1,54 +1,104 @@
+<%@page import="java.util.Arrays"%>
+<%@page import="java.util.Comparator"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.text.NumberFormat"%>
+<%@page import="java.util.Collections"%>
+<%@page import="com.mycompany.consultaprodutos.ConsultaProdutos"%>
 <%@ page language="java"  contentType="text/html;  charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="java.util.List"%>
 <%@ page import="com.mycompany.consultaprodutos.Produtos" %>
+<%@ page import="com.mycompany.consultaprodutos.ConsultaProdutos"%>
 <!DOCTYPE html>
 
 <jsp:useBean id="Produto" class="com.mycompany.consultaprodutos.Produtos" scope="session">
-    
-    
-            
-    
-        
+</jsp:useBean>     
 <html>
         
     <head>
-        <title>Start Page</title>
+        <link rel="stylesheet" type="text/css" href="css/estilo.css">
+        <title>Consulta a preços</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
     </head>
     <body>
-        <h2>Entre com o códgo ou EAN13 do produto...</h2>
-        <form action="index.jsp" method="GET">
-        <input type="text" id="codigo" name="codigo" /><!-- comment -->
-        <button type="button" id="enviar" name="enviar" onclick="submit">OK</button>
+        <h2>Entre com o código ou EAN13 do produto...</h2>
+        <form  action="index.jsp" method="post">
+        <input type="text" name="codigoProduto" /><!-- comment -->
+        
+        <button>OK</button>
+        <br><!-- comment -->
+        
+       
         </form>
         
- 
- <% 
-     String codigo= (String) request.getParameter("codigo");
+<% 
+     String codigo;
+     codigo = request.getParameter("codigoProduto");
      
-     Produtos produto = (Produtos) session.getAttribute("codigo");
-     if (produto==null) 
-             produto = new Produtos(); 
- 
-    
-    
-        if (codigo!=null){
-            out.print("Há codigo");
-        }
-        else{
-            out.print("Sem nada");
+     Produtos produtos = (Produtos) session.getAttribute("produtos");
+     if (produtos==null) 
+            produtos = new Produtos(); 
+     
+     List<Produtos> listaProdutos;
+     listaProdutos =(List<Produtos>) session.getAttribute("listaProdutos");     
+     
+     
+                 
+     
+        if (listaProdutos==null){
+            ConsultaProdutos consulta = new ConsultaProdutos();
+             listaProdutos = consulta.ConsultarProduto();
+             Collections.sort(listaProdutos);
+             session.setAttribute("listaProdutos", listaProdutos);
+    }
+     
+     
+     
+if ((codigo!=null)&&(listaProdutos!=null)){
+        
+        %>
+        <table>
+            <thead>
+                <tr>
+                    <td>Código</td>
+                    <td>EAN13</td>
+                    <td>Descritivo</td>
+                    <td>Preço</td>
+                    <td>Estoque</td>
+                </tr>
+            </thead>
 
-     }
-out.print(codigo);
- %>   
+        <%        
+        
+        for(int i=0;i<listaProdutos.size();i++){
+        
+        if ((listaProdutos.get(i).getCodigo().contains(codigo))|(listaProdutos.get(i).getNome().contains(codigo.toUpperCase())))
+        
+        {
+        out.print("<tr>");
+            out.print("<td> "+listaProdutos.get(i).getCodigo()+"</td>");
+            out.print("<td> "+listaProdutos.get(i).getEAN13()+"</td>");
+            out.print("<td> "+listaProdutos.get(i).getNome()+"</td>");
+            out.print("<td> "+NumberFormat.getCurrencyInstance().format(listaProdutos.get(i).getPreco())+"</td>");
+            out.print("<td> "+NumberFormat.getNumberInstance().format(listaProdutos.get(i).getEstoque())+"</td>");
+        out.print("</tr>");   
+            }
+                                                }
+                }
+    
+
+ %> 
+ 
+ 
     
         
         
     
     </body>
  <%
- session.setAttribute("codigo", codigo);
+ session.setAttribute("codigo", request.getParameter("codigoProduto"));
+ session.setAttribute("listaProdutos", listaProdutos);
  %>
-</jsp:useBean>
+
     
 </html>

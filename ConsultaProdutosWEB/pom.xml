@@ -5,7 +5,7 @@
     <artifactId>ConsultaProdutosWEB</artifactId>
     <version>0.1</version>
     <packaging>war</packaging>
-    <name>ConsultaProdutosWEB-0.1</name>
+    <name>ConsultaProdutosWEB</name>
     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

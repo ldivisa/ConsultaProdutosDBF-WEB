@@ -1,0 +1,33 @@
+body{
+    background-color: black;
+    color: white;
+    
+}
+thead,header{
+    background-color: red;
+    color:white;
+}
+tbody tr:nth-child(odd) {
+  background-color: white;
+  color:black;
+}
+
+tbody tr:nth-child(even) {
+  background-color: grey;
+}
+
+tbody tr {
+  background-image: url(noise.png);
+}
+
+table {
+    
+  float: inside;  
+  vertical-align: middle;
+  text-align: center;
+header{
+    background-color: orange;
+    
+}    
+}
+
