@@ -20,8 +20,8 @@
         <link rel="stylesheet" type="text/css" href="css/estilo.css">
         <title>Consulta a preços</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
     </head>
+    
     <body>
         <h2>Entre com o código ou EAN13 do produto...</h2>
         <form  action="index.jsp" method="post">
@@ -44,11 +44,11 @@
      List<Produtos> listaProdutos;
      listaProdutos =(List<Produtos>) session.getAttribute("listaProdutos");     
      
-        if (listaProdutos==null){
+        
             ConsultaProdutos consulta = new ConsultaProdutos();
              listaProdutos = consulta.ConsultarProduto();
              session.setAttribute("listaProdutos", listaProdutos);
-    }
+    
      
      
      
@@ -69,7 +69,7 @@ if ((codigo!=null)&&(listaProdutos!=null)){
                     <td>Estoque</td>
                 </tr>
             </thead>
-
+            <tbody>    
         <%        
         
         for(int i=0;i<listaProdutos.size();i++){
@@ -91,7 +91,8 @@ if ((codigo!=null)&&(listaProdutos!=null)){
 
  %> 
  
- 
+            </tbody>
+        </table>
     
         
         
