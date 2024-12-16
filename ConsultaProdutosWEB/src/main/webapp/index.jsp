@@ -25,7 +25,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
     <body>
-        <h2>Entre com o código ou EAN13 do produto...</h2>
+        <h4>1)Digite o código do produto que deseja pesquisar ou scaneie o EAN13 da etiqueta do produto.</h4>
+        <h5>2)Aperte "ENTER" no teclado ou clique no botão "OK".
         <form  action="index.jsp" method="post">
         <input type="text" name="codigoProduto" autofocus /><!-- comment -->
         <button>OK</button>
