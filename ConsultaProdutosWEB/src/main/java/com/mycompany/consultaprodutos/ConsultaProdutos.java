@@ -4,32 +4,29 @@
  */
 
 package com.mycompany.consultaprodutos;
-
-
-
 import com.linuxense.javadbf.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import static java.lang.System.out;
-
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-
-
 /**
  *
  * @author Luiz
  */
 public class ConsultaProdutos {
- 
-    public void ConsultaProdutos(){}
+public String caminhoDados = "Y:/dados/produtos.dbf";
+public String codigo,ordenacao;
+public List<Produtos> listaProdutos;
+
+//this.caminhoDados =("/consultaProdutos/produtos.dbf");*/
+    
+    public void ConsultaProdutos(){
+        }
+    
     public ArrayList<Produtos> ConsultarProdutoArray() {
                 ArrayList<Produtos> listagem = new ArrayList<>();
                 DBFReader reader = null;
@@ -38,7 +35,8 @@ public class ConsultaProdutos {
 			// create a DBFReader object
 			//reader = new DBFReader(new FileInputStream(args[0]));
                         //reader = new DBFReader(new FileInputStream("Y:/dados/produtos.dbf"));
-                        reader = new DBFReader(new FileInputStream("/consultaProdutos/produtos.dbf"));
+                        //reader = new DBFReader(new FileInputStream("/consultaProdutos/produtos.dbf"));
+                        reader = new DBFReader(new FileInputStream(caminhoDados));
 
 			// get the field count if you want for some reasons like the following
 
@@ -71,7 +69,7 @@ public class ConsultaProdutos {
                                         if (rowObjects[1].toString().isEmpty()){
                                             produto.setEAN13("0");} else {
                                         produto.setEAN13(rowObjects[1].toString());}
-                                        
+                                        produto.setCusto(Double.valueOf(rowObjects[6].toString()));
                                         produto.setPreco(Double.valueOf(rowObjects[7].toString()));
                                         produto.setEstoque(Double.valueOf(rowObjects[5].toString()));
                                         listagem.add(produto);
@@ -109,7 +107,7 @@ public class ConsultaProdutos {
 
 			// create a DBFReader object
 			//reader = new DBFReader(new FileInputStream(args[0]));
-                        reader = new DBFReader(new FileInputStream("/consultaProdutos/produtos.dbf"));
+                        reader = new DBFReader(new FileInputStream(caminhoDados));
 
 			// get the field count if you want for some reasons like the following
 
@@ -122,15 +120,6 @@ public class ConsultaProdutos {
 
 				DBFField field = reader.getField(i);
 
-				// do something with it if you want
-				// refer the JavaDoc API reference for more details
-				//
-				//System.out.println(field.getName());
-			}
-                        
-
-			// Now, lets us start reading the rows
-
 			Object[] rowObjects;
 
 			while ((rowObjects = reader.nextRecord()) != null) {
@@ -142,7 +131,7 @@ public class ConsultaProdutos {
                                         if (rowObjects[1].toString().isEmpty()){
                                             produto.setEAN13("0");} else {
                                         produto.setEAN13(rowObjects[1].toString());}
-                                        
+                                        produto.setCusto(Double.valueOf(rowObjects[6].toString()));
                                         produto.setPreco(Double.valueOf(rowObjects[7].toString()));
                                         produto.setEstoque(Double.valueOf(rowObjects[5].toString()));
                                         listagem.add(produto);
@@ -155,11 +144,10 @@ public class ConsultaProdutos {
 					System.out.println(rowObjects[i]);
                                               				}*/
 			}
-
 			// By now, we have iterated through all of the rows
 
-		} 
-                catch (FileNotFoundException ex)
+		}} 
+                    catch (FileNotFoundException ex)
                 {
                  out.print( "Não encontrei o arquivo: "+ex);
                  }
@@ -172,9 +160,4 @@ public class ConsultaProdutos {
 		}
 	return listagem;
         }
-    
-    
-    }
-
-
-
+   }

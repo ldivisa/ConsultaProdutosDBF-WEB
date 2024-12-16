@@ -10,12 +10,12 @@ import java.util.Comparator;
  *
  * @author Luiz
  */
-public class ProdutosComparatorPreco implements Comparator<Produtos>{
+public class ProdutosComparatorMb implements Comparator<Produtos>{
 
     @Override
     public int compare(Produtos o1, Produtos o2) {
-        int p1 = (int) Math.round(o1.getPreco()*100);
-        int p2 = (int) Math.round(o2.getPreco()*100);
+        int p1 = (int) Math.round((o1.getPreco()-o1.getCusto())*100);
+        int p2 = (int) Math.round((o2.getPreco()-o1.getCusto())*100);
         
         return (p1-p2);
     }

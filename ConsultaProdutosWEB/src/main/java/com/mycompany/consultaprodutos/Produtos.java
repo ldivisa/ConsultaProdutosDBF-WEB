@@ -15,6 +15,7 @@ public class Produtos implements Comparable<Produtos>{
     private String EAN13;
     private double preco;
     private double estoque;
+    private double custo;
 
     public String getCodigo() {
         return codigo;
@@ -77,5 +78,13 @@ public class Produtos implements Comparable<Produtos>{
             return -1;
         else
                 return 0;
+    }
+
+    public double getCusto() {
+        return custo;
+    }
+
+    public void setCusto(double custo) {
+        this.custo = custo;
     }
 }
