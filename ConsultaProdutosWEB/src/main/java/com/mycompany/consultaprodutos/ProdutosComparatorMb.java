@@ -17,7 +17,7 @@ public class ProdutosComparatorMb implements Comparator<Produtos>{
         int p1 = (int) Math.round((o1.getPreco()-o1.getCusto())*100);
         int p2 = (int) Math.round((o2.getPreco()-o1.getCusto())*100);
         
-        return (p1-p2);
+        return (p2-p1);
     }
     
 }
