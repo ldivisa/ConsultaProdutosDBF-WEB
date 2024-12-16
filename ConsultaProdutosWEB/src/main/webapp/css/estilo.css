@@ -6,6 +6,12 @@ body{
 thead,header{
     background-color: red;
     color:white;
+    a.link{
+        color:white;
+    }
+    a.visited{
+        color:yellow;
+    }
 }
 tbody tr:nth-child(odd) {
   background-color: white;
@@ -27,7 +33,7 @@ table {
   text-align: center;
 header{
     background-color: orange;
-    
-}    
+    color:yellow;
+    }
 }
 
