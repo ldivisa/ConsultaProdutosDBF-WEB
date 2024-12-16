@@ -51,8 +51,7 @@
   */  
     if ((codigo!=null)&&(listaProdutos!=null)){
         if(ordenacao==null){
-        out.println("Ordenacao é nula...");
-         if (codigo.matches("[0-9]+")){
+        if (codigo.matches("[0-9]+")){
                         ordenacao="codigo";   }
                         else{
                         ordenacao="descricao";}
