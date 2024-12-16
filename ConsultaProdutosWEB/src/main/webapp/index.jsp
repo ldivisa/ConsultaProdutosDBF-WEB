@@ -29,11 +29,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
     <body>
-        <h4>1)Digite o código do produto que deseja pesquisar ou scaneie o EAN13 da etiqueta do produto.</h4>
-        <h5>2)Aperte "ENTER" no teclado ou clique no botão "OK".
+        <h4>1)Digite o código do produto que deseja pesquisar ou scaneie o EAN13 da etiqueta do produto - 2)Aperte "ENTER" no teclado:</h4>
+<!--         ou clique no botão "OK".-->
         <form  action="index.jsp" method="post">
         <input type="text" name="codigoProduto" autofocus /><!-- comment -->
-        <button>OK</button>
+<!--        <button>OK</button>-->
         <br><!-- comment -->
         </form>
      <%
@@ -73,12 +73,12 @@
         if (ordenacao.equalsIgnoreCase("mb")){
             Collections.sort(listaProdutos,new ProdutosComparatorMb());}        
          codigo = request.getParameter("codigoProduto");
-         out.print("<table><thead><tr><td><a href=\"index.jsp?ordenacao=codigo&codigoProduto="+codigo+"\" class=\"link\">Código</a></td>"+
-                "<td><a href=\"index.jsp?ordenacao=ean13&codigoProduto="+codigo+"\" class=\"link\" >EAN13</a></td>"+
-                "<td><a href=\"index.jsp?ordenacao=descricao&codigoProduto="+codigo+"\" class=\"link\">Descritivo</a></td>"+
-                "<td><a href=\"index.jsp?ordenacao=preco&codigoProduto="+codigo+"\" class=\"link\">Preço</a></td>"+
-                "<td><a href=\"index.jsp?ordenacao=estoque&codigoProduto="+codigo+"\" class=\"link\">Estoque</a></td>"+
-                "<td><a href=\"index.jsp?ordenacao=mb&codigoProduto="+codigo+"\" class=\"link\">M.B.</a></td></tr></thead><tbody>");
+         out.print("<table><thead><tr><td><a href=\"index.jsp?ordenacao=codigo&codigoProduto="+codigo+"\" class=\"link\" accesskey=\"c\">Código</a></td>"+
+                "<td><a href=\"index.jsp?ordenacao=ean13&codigoProduto="+codigo+"\" class=\"link\" accesskey=\"b\">EAN13</a></td>"+
+                "<td><a href=\"index.jsp?ordenacao=descricao&codigoProduto="+codigo+"\" class=\"link\" accesskey=\"d\">Descritivo</a></td>"+
+                "<td><a href=\"index.jsp?ordenacao=preco&codigoProduto="+codigo+"\" class=\"link\" accesskey=\"p\">Preço</a></td>"+
+                "<td><a href=\"index.jsp?ordenacao=estoque&codigoProduto="+codigo+"\" class=\"link\" accesskey=\"e\">Estoque</a></td>"+
+                "<td><a href=\"index.jsp?ordenacao=mb&codigoProduto="+codigo+"\" class=\"link\" accesskey=\"m\">M.B.</a></td></tr></thead><tbody>");
          for(int i=0;i<listaProdutos.size();i++){
          int contadorSimilaridade=0;
                 for (String s:palavrasPesquisadas){
