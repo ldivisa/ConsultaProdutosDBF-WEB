@@ -1,3 +1,5 @@
+<%@page import="java.lang.String"%>
+<%@page import="java.util.Objects"%>
 <%@page import="org.apache.commons.lang3.StringUtils"%>
 <%@page import="org.ahocorasick.trie.Emit"%>
 <%@page import="java.util.Collection"%>
@@ -19,9 +21,7 @@
 <%@ page import="com.mycompany.consultaprodutos.Produtos" %>
 <%@ page import="com.mycompany.consultaprodutos.ConsultaProdutos"%>
 <!DOCTYPE html>
-
 <jsp:useBean id="Produto" class="com.mycompany.consultaprodutos.Produtos" scope="session" />
-
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="css/estilo.css">
@@ -31,9 +31,53 @@
     <body>
         <h4>1)Digite o código do produto que deseja pesquisar ou scaneie o EAN13 da etiqueta do produto - 2)Aperte "ENTER" no teclado:</h4>
 <!--         ou clique no botão "OK".-->
-        <form  action="index.jsp" method="post">
+<%
+ArrayList<String> alChecados=new ArrayList<>();  
+alChecados.removeAll(alChecados);
+      if ((ArrayList<String>) session.getAttribute("alChecados")!=null)
+                alChecados =(ArrayList<String>) session.getAttribute("alChecados");
+    String red="";
+    String quad="";
+    
+    String[] check=null;
+    
+        check=(String[]) request.getParameterValues("checkBoxes");
+       
+       if (check!=null)       {
+            alChecados.removeAll(alChecados);
+            for (int i = 0 ; i <= check.length-1; i++){
+                  alChecados.add(check[i]);
+            }}
+            else{
+            alChecados.removeAll(alChecados);
+        }
+       session.setAttribute("alChecados", alChecados);
+       //out.print("\n Gravando sessao com "+alChecados.size()+" itens");
+       if (alChecados.contains("red")){
+                    red="checked=\"on\"";
+                    //out.print("Array--red checked on");
+                } else{
+                    red="";
+                }
+       if (alChecados.contains("quad")){
+                    quad="checked=\"on\"";   
+                    //out.print("Array--quad checked on");
+                } else{
+                    quad="";
+                }
+             
+%>
+        <form  action="index.jsp" method="GET">
         <input type="text" name="codigoProduto" autofocus /><!-- comment -->
-<!--        <button>OK</button>-->
+        <label class="switchBtn">
+            <input type="checkbox" name="checkBoxes" value="quad" <%=quad%>>
+            <div class="slide round">             Estoque</div>
+        </label>
+        <label class="switchBtn">
+            <input type="checkbox" name="checkBoxes" value="red" <%=red%>  >
+            <div class="slide round">        M.b.</div>
+        </label>
+        <!--        <button>OK</button>-->
         <br><!-- comment -->
         </form>
      <%
@@ -73,12 +117,24 @@
         if (ordenacao.equalsIgnoreCase("mb")){
             Collections.sort(listaProdutos,new ProdutosComparatorMb());}        
          codigo = request.getParameter("codigoProduto");
-         out.print("<table><thead><tr><td><a href=\"index.jsp?ordenacao=codigo&codigoProduto="+codigo+"\" class=\"link\" accesskey=\"c\">Código</a></td>"+
-                "<td><a href=\"index.jsp?ordenacao=ean13&codigoProduto="+codigo+"\" class=\"link\" accesskey=\"b\">EAN13</a></td>"+
-                "<td><a href=\"index.jsp?ordenacao=descricao&codigoProduto="+codigo+"\" class=\"link\" accesskey=\"d\">Descritivo</a></td>"+
-                "<td><a href=\"index.jsp?ordenacao=preco&codigoProduto="+codigo+"\" class=\"link\" accesskey=\"p\">Preço</a></td>"+
-                "<td><a href=\"index.jsp?ordenacao=estoque&codigoProduto="+codigo+"\" class=\"link\" accesskey=\"e\">Estoque</a></td>"+
-                "<td><a href=\"index.jsp?ordenacao=mb&codigoProduto="+codigo+"\" class=\"link\" accesskey=\"m\">M.B.</a></td></tr></thead><tbody>");
+         String complementoCheckBoxes="&";
+    
+         if(alChecados.contains("red"))
+             complementoCheckBoxes+="checkBoxes=red";
+         
+         if(alChecados.contains("quad"))
+         complementoCheckBoxes+="&checkBoxes=quad";
+             
+         out.print("<table><thead><tr><td><a href=\"index.jsp?ordenacao=codigo&codigoProduto="+codigo+complementoCheckBoxes+"\" class=\"link\" accesskey=\"c\">Código</a></td>"+
+                "<td><a href=\"index.jsp?ordenacao=ean13&codigoProduto="+codigo+complementoCheckBoxes+"\" class=\"link\" accesskey=\"b\">EAN13</a></td>"+
+                "<td><a href=\"index.jsp?ordenacao=descricao&codigoProduto="+codigo+complementoCheckBoxes+"\" class=\"link\" accesskey=\"d\">Descritivo</a></td>"+
+                "<td><a href=\"index.jsp?ordenacao=preco&codigoProduto="+codigo+complementoCheckBoxes+"\" class=\"link\" accesskey=\"p\">Preço</a></td>");
+                if(alChecados.contains("quad"))
+                       out.print("<td><a href=\"index.jsp?ordenacao=estoque&codigoProduto="+codigo+complementoCheckBoxes+"\" class=\"link\" accesskey=\"e\">Estoque</a></td>");
+                if(alChecados.contains("red"))
+                        out.print("<td><a href=\"index.jsp?ordenacao=mb&codigoProduto="+codigo+complementoCheckBoxes+"\" class=\"link\" accesskey=\"m\">M.B.</a></td></tr></thead><tbody>");
+                        else
+                        out.print("</thead><tbody>");
          for(int i=0;i<listaProdutos.size();i++){
          int contadorSimilaridade=0;
                 for (String s:palavrasPesquisadas){
@@ -91,15 +147,18 @@
                     out.println("<td> "+listaProdutos.get(i).getEAN13()+"</td>");
                     out.println("<td> "+listaProdutos.get(i).getNome()+"</td>");
                     out.println("<td> "+NumberFormat.getCurrencyInstance().format(listaProdutos.get(i).getPreco())+"</td>");
+                    if(alChecados.contains("quad"))
                     out.println("<td> "+NumberFormat.getNumberInstance().format(listaProdutos.get(i).getEstoque())+"</td>");
-                    out.println("<td> "+NumberFormat.getCurrencyInstance().format(listaProdutos.get(i).getPreco()-listaProdutos.get(i).getCusto())+"</td>");
-                    out.println("</tr>");   
+                    
+                    if(alChecados.contains("red"))
+                        out.println("<td> "+NumberFormat.getCurrencyInstance().format(listaProdutos.get(i).getPreco()-listaProdutos.get(i).getCusto())+"</td>");
+                        else
+                            out.println("</tr>");   
                 }
             }
     out.print("</tbody></table></body>");
          }
     session.setAttribute("codigo", request.getParameter("codigoProduto"));
     session.setAttribute("listaProdutos", listaProdutos);
-%>
-
+    %>
 </html>

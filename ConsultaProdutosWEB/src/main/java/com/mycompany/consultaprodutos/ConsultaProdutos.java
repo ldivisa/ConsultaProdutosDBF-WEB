@@ -18,11 +18,12 @@ import javax.swing.JOptionPane;
  * @author Luiz
  */
 public class ConsultaProdutos {
-public String caminhoDados = "/consultaProdutos/produtos.dbf";
+//public String caminhoDados = "/consultaProdutos/produtos.dbf";
+public String caminhoDados = "C:/Users/luiz.souza/Downloads/produtos.dbf";
 public String codigo,ordenacao;
 public List<Produtos> listaProdutos;
-//"C:/Users/luiz.souza/Downloads/produtos.dbf"
-//this.caminhoDados =("/consultaProdutos/produtos.dbf");*/
+
+
     
     public void ConsultaProdutos(){
         }
