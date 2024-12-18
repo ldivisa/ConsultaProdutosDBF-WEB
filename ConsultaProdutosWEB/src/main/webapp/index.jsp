@@ -36,6 +36,7 @@ alChecados.removeAll(alChecados);
                 alChecados =(ArrayList<String>) session.getAttribute("alChecados");
     String red="";
     String quad="";
+    String ean="";
     String limiteCodigo="";
     String[] check=null;
     int limiteContagem;
@@ -64,7 +65,12 @@ alChecados.removeAll(alChecados);
                 } else{
                     quad="";
                 }
-                
+        if (alChecados.contains("ean")){
+                    ean="checked=\"on\"";   
+                    //out.print("Array--quad checked on");
+                } else{
+                    ean="";
+                }
         if (alChecados.contains("limiteCodigo")){
                     limiteCodigo="checked=\"on\"";
                     //out.print("Array--quad checked on");
@@ -80,7 +86,11 @@ alChecados.removeAll(alChecados);
             <input type="checkbox" name="checkBoxes" value="quad" <%=quad%>>
             <div class="slide round">             Estoque</div>
         </label>
-            
+        <label class="switchBtn">
+            <input type="checkbox" name="checkBoxes" value="ean" <%=ean%>>
+            <div class="slide round">             Estoque</div>
+        </label>
+                
         <label class="switchBtn">
             <input type="checkbox" name="checkBoxes" value="red" <%=red%>  >
             <div class="slide round">        M.b.</div>
@@ -146,9 +156,10 @@ alChecados.removeAll(alChecados);
          if(alChecados.contains("quad"))
             complementoCheckBoxes+="&checkBoxes=quad";
           
-         out.print("<table><thead><tr><td><a href=\"index.jsp?ordenacao=codigo&codigoProduto="+codigo+complementoCheckBoxes+"\" class=\"link\" accesskey=\"c\">Código</a></td>"+
-                "<td><a href=\"index.jsp?ordenacao=ean13&codigoProduto="+codigo+complementoCheckBoxes+"\" class=\"link\" accesskey=\"b\">EAN13</a></td>"+
-                "<td><a href=\"index.jsp?ordenacao=descricao&codigoProduto="+codigo+complementoCheckBoxes+"\" class=\"link\" accesskey=\"d\">Descritivo</a></td>"+
+         out.print("<table><thead><tr><td><a href=\"index.jsp?ordenacao=codigo&codigoProduto="+codigo+complementoCheckBoxes+"\" class=\"link\" accesskey=\"c\">Código</a></td>");
+                if(alChecados.contains("ean"))
+                out.print("<td><a href=\"index.jsp?ordenacao=ean13&codigoProduto="+codigo+complementoCheckBoxes+"\" class=\"link\" accesskey=\"b\">EAN13</a></td>");
+                out.print("<td><a href=\"index.jsp?ordenacao=descricao&codigoProduto="+codigo+complementoCheckBoxes+"\" class=\"link\" accesskey=\"d\">Descritivo</a></td>"+
                 "<td><a href=\"index.jsp?ordenacao=preco&codigoProduto="+codigo+complementoCheckBoxes+"\" class=\"link\" accesskey=\"p\">Preço</a></td>");
                 if(alChecados.contains("quad"))
                        out.print("<td><a href=\"index.jsp?ordenacao=estoque&codigoProduto="+codigo+complementoCheckBoxes+"\" class=\"link\" accesskey=\"e\">Estoque</a></td>");
@@ -169,6 +180,7 @@ alChecados.removeAll(alChecados);
                     contadorExibicao++;
                     out.println("<tr>");
                     out.println("<td> "+listaProdutos.get(i).getCodigo()+"</td>");
+                    if(alChecados.contains("ean"))
                     out.println("<td> "+listaProdutos.get(i).getEAN13()+"</td>");
                     out.println("<td> "+listaProdutos.get(i).getNome()+"</td>");
                     out.println("<td> "+NumberFormat.getCurrencyInstance().format(listaProdutos.get(i).getPreco())+"</td>");
