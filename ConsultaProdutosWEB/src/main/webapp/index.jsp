@@ -70,6 +70,7 @@ alChecados.removeAll(alChecados);
                     //out.print("Array--quad checked on");
                 } else{
                     limiteCodigo="";
+                    
                 }       
              
 %>
@@ -104,6 +105,7 @@ alChecados.removeAll(alChecados);
      List<Produtos> listaProdutos;
      ConsultaProdutos consulta = new ConsultaProdutos();
      listaProdutos = consulta.ConsultarProduto();
+     limiteContagem=listaProdutos.size();
     String ordenacao= request.getParameter("ordenacao");
     if ((codigo!=null)&&(listaProdutos!=null)){
     StringUtils util = new StringUtils();
@@ -115,6 +117,10 @@ alChecados.removeAll(alChecados);
         if(ordenacao==null){
         if (codigo.matches("[0-9]+")){
                         ordenacao="codigo";  
+                        if (limiteCodigo.contains("che")){
+                        limiteContagem=listaProdutos.size();}
+                        else{
+                        limiteContagem=1;}    
                                     }
                         else{
                         ordenacao="descricao";}
@@ -139,10 +145,7 @@ alChecados.removeAll(alChecados);
          
          if(alChecados.contains("quad"))
             complementoCheckBoxes+="&checkBoxes=quad";
-          if (limiteCodigo.contains("che")){
-                        limiteContagem=listaProdutos.size();}
-                        else{
-                        limiteContagem=1;}    
+          
          out.print("<table><thead><tr><td><a href=\"index.jsp?ordenacao=codigo&codigoProduto="+codigo+complementoCheckBoxes+"\" class=\"link\" accesskey=\"c\">Código</a></td>"+
                 "<td><a href=\"index.jsp?ordenacao=ean13&codigoProduto="+codigo+complementoCheckBoxes+"\" class=\"link\" accesskey=\"b\">EAN13</a></td>"+
                 "<td><a href=\"index.jsp?ordenacao=descricao&codigoProduto="+codigo+complementoCheckBoxes+"\" class=\"link\" accesskey=\"d\">Descritivo</a></td>"+
