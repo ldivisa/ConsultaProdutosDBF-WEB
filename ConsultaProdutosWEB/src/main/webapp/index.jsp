@@ -194,7 +194,7 @@ alChecados.removeAll(alChecados);
          
          }
          if (contadorExibicao==limiteContagem){
-         out.print("hora de sair");
+         //out.print("hora de sair");
          break;
          }
          
