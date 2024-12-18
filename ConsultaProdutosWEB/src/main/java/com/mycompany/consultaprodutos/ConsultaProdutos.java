@@ -16,9 +16,9 @@ import javax.swing.JOptionPane;
  * @author Luiz
  */
 public class ConsultaProdutos {
-//public String caminhoDados = "/consultaProdutos/produtos.dbf";
+public String caminhoDados = "/consultaProdutos/produtos.dbf";
 //public String caminhoDados = "C:/Users/luiz.souza/Downloads/produtos.dbf";
-public String caminhoDados = "y:/dados/produtos.dbf";
+//public String caminhoDados = "y:/dados/produtos.dbf";
 public String codigo,ordenacao;
 public List<Produtos> listaProdutos;
 
