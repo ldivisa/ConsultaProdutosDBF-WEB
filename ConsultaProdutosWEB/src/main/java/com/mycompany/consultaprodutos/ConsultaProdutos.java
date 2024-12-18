@@ -8,9 +8,7 @@ import com.linuxense.javadbf.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import static java.lang.System.out;
-import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import javax.swing.JOptionPane;
 /**
@@ -19,7 +17,8 @@ import javax.swing.JOptionPane;
  */
 public class ConsultaProdutos {
 //public String caminhoDados = "/consultaProdutos/produtos.dbf";
-public String caminhoDados = "C:/Users/luiz.souza/Downloads/produtos.dbf";
+//public String caminhoDados = "C:/Users/luiz.souza/Downloads/produtos.dbf";
+public String caminhoDados = "y:/dados/produtos.dbf";
 public String codigo,ordenacao;
 public List<Produtos> listaProdutos;
 

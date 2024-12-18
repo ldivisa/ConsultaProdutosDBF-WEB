@@ -1,9 +1,7 @@
 <%@page import="java.lang.String"%>
 <%@page import="java.util.Objects"%>
 <%@page import="org.apache.commons.lang3.StringUtils"%>
-<%@page import="org.ahocorasick.trie.Emit"%>
 <%@page import="java.util.Collection"%>
-<%@page import="org.ahocorasick.trie.Trie"%>
 <%@page import="com.mycompany.consultaprodutos.ProdutosComparatorMb"%>
 <%@page import="com.mycompany.consultaprodutos.ProdutosComparatorEstoque"%>
 <%@page import="com.mycompany.consultaprodutos.ProdutosComparatorEan13"%>
@@ -38,8 +36,9 @@ alChecados.removeAll(alChecados);
                 alChecados =(ArrayList<String>) session.getAttribute("alChecados");
     String red="";
     String quad="";
-    
+    String limiteCodigo="";
     String[] check=null;
+    int limiteContagem;
     
         check=(String[]) request.getParameterValues("checkBoxes");
        
@@ -65,6 +64,13 @@ alChecados.removeAll(alChecados);
                 } else{
                     quad="";
                 }
+                
+        if (alChecados.contains("limiteCodigo")){
+                    limiteCodigo="checked=\"on\"";
+                    //out.print("Array--quad checked on");
+                } else{
+                    limiteCodigo="";
+                }       
              
 %>
         <form  action="index.jsp" method="GET">
@@ -73,15 +79,23 @@ alChecados.removeAll(alChecados);
             <input type="checkbox" name="checkBoxes" value="quad" <%=quad%>>
             <div class="slide round">             Estoque</div>
         </label>
+            
         <label class="switchBtn">
             <input type="checkbox" name="checkBoxes" value="red" <%=red%>  >
             <div class="slide round">        M.b.</div>
+        </label>
+            
+        <label class="switchBtn">
+            <input type="checkbox" name="checkBoxes" value="limiteCodigo" <%=limiteCodigo%>  >
+            <div class="slide round">        MultiCOD</div>
         </label>
         <!--        <button>OK</button>-->
         <br><!-- comment -->
         </form>
      <%
+     
      String codigo;
+     
      codigo = request.getParameter("codigoProduto");
      Produtos produtos =null;
      produtos=(Produtos) session.getAttribute("produtos");
@@ -100,7 +114,8 @@ alChecados.removeAll(alChecados);
                 }
         if(ordenacao==null){
         if (codigo.matches("[0-9]+")){
-                        ordenacao="codigo";   }
+                        ordenacao="codigo";  
+                                    }
                         else{
                         ordenacao="descricao";}
         }
@@ -117,14 +132,17 @@ alChecados.removeAll(alChecados);
         if (ordenacao.equalsIgnoreCase("mb")){
             Collections.sort(listaProdutos,new ProdutosComparatorMb());}        
          codigo = request.getParameter("codigoProduto");
-         String complementoCheckBoxes="&";
+         String complementoCheckBoxes="";
     
          if(alChecados.contains("red"))
-             complementoCheckBoxes+="checkBoxes=red";
+             complementoCheckBoxes+="&checkBoxes=red";
          
          if(alChecados.contains("quad"))
-         complementoCheckBoxes+="&checkBoxes=quad";
-             
+            complementoCheckBoxes+="&checkBoxes=quad";
+          if (limiteCodigo.contains("che")){
+                        limiteContagem=listaProdutos.size();}
+                        else{
+                        limiteContagem=1;}    
          out.print("<table><thead><tr><td><a href=\"index.jsp?ordenacao=codigo&codigoProduto="+codigo+complementoCheckBoxes+"\" class=\"link\" accesskey=\"c\">Código</a></td>"+
                 "<td><a href=\"index.jsp?ordenacao=ean13&codigoProduto="+codigo+complementoCheckBoxes+"\" class=\"link\" accesskey=\"b\">EAN13</a></td>"+
                 "<td><a href=\"index.jsp?ordenacao=descricao&codigoProduto="+codigo+complementoCheckBoxes+"\" class=\"link\" accesskey=\"d\">Descritivo</a></td>"+
@@ -134,14 +152,18 @@ alChecados.removeAll(alChecados);
                 if(alChecados.contains("red"))
                         out.print("<td><a href=\"index.jsp?ordenacao=mb&codigoProduto="+codigo+complementoCheckBoxes+"\" class=\"link\" accesskey=\"m\">M.B.</a></td></tr></thead><tbody>");
                         else
-                        out.print("</thead><tbody>");
+              out.print("</thead><tbody>");
+        
+                        //out.print("Limite:"+limiteContagem);
          for(int i=0;i<listaProdutos.size();i++){
          int contadorSimilaridade=0;
+         int contadorExibicao=0;
                 for (String s:palavrasPesquisadas){
                     if (listaProdutos.get(i).getNome().contains(s.toUpperCase())){
                         contadorSimilaridade++;}
          }
          if ((contadorSimilaridade==palavrasPesquisadas.size())||((listaProdutos.get(i).getCodigo().contains(codigo))||(listaProdutos.get(i).getEAN13().contains(codigo)))){
+                    contadorExibicao++;
                     out.println("<tr>");
                     out.println("<td> "+listaProdutos.get(i).getCodigo()+"</td>");
                     out.println("<td> "+listaProdutos.get(i).getEAN13()+"</td>");
@@ -151,14 +173,22 @@ alChecados.removeAll(alChecados);
                     out.println("<td> "+NumberFormat.getNumberInstance().format(listaProdutos.get(i).getEstoque())+"</td>");
                     
                     if(alChecados.contains("red"))
-                        out.println("<td> "+NumberFormat.getCurrencyInstance().format(listaProdutos.get(i).getPreco()-listaProdutos.get(i).getCusto())+"</td>");
+                              out.println("<td> "+NumberFormat.getCurrencyInstance().format(listaProdutos.get(i).getPreco()-listaProdutos.get(i).getCusto())+"</td>");
                         else
-                            out.println("</tr>");   
-                }
-            }
-    out.print("</tbody></table></body>");
+                              out.println("</tr>");
+         
          }
+         if (contadorExibicao==limiteContagem){
+         out.print("hora de sair");
+         break;
+         }
+         
+         }          
+            out.print("</tbody></table></body>");
+         
     session.setAttribute("codigo", request.getParameter("codigoProduto"));
     session.setAttribute("listaProdutos", listaProdutos);
-    %>
+         }
+
+     %>
 </html>
