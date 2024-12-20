@@ -37,6 +37,9 @@ alChecados.removeAll(alChecados);
     String red="";
     String quad="";
     String ean="";
+    String opcoes="";
+    Boolean esconder=true;
+    String esconderCb="";
     String limiteCodigo="";
     String[] check=null;
     int limiteContagem;
@@ -76,32 +79,46 @@ alChecados.removeAll(alChecados);
                     //out.print("Array--quad checked on");
                 } else{
                     limiteCodigo="";
-                    
-                }       
-             
+                 }
+                 
+        if (alChecados.contains("opcoes")){
+                    opcoes="checked=\"on\"";
+                    esconder=false;
+                    esconderCb=(esconder?"hidden":"checkbox");
+                    //out.print("Array--quad checked on");
+                } else{
+                    opcoes="";
+                }
 %>
         <form  action="index.jsp" method="GET">
         <input type="text" name="codigoProduto" autofocus /><!-- comment -->
         <label class="switchBtn">
-            <input type="checkbox" name="checkBoxes" value="quad" <%=quad%>>
-            <div class="slide round">             Estoque</div>
+            <input type="checkbox" name="checkBoxes" value="opcoes" <%=opcoes%> >
+            <div class="slide round">Opções</div>
+        </label>
+        <%
+            if (!esconder){%>
+        <label class="switchBtn">
+            <input type="checkbox" name="checkBoxes" value="quad" <%=quad%> <%=esconder%>>
+            <div class="slide round">EAN</div>
         </label>
         <label class="switchBtn">
-            <input type="checkbox" name="checkBoxes" value="ean" <%=ean%>>
-            <div class="slide round">             Estoque</div>
+            <input type="checkbox" name="checkBoxes" value="ean" <%=ean%> <%=esconder%>>
+            <div class="slide round">Estoque</div>
         </label>
                 
         <label class="switchBtn">
-            <input type="checkbox" name="checkBoxes" value="red" <%=red%>  >
-            <div class="slide round">        M.b.</div>
+            <input type="checkbox" name="checkBoxes" value="red" <%=red%> <%=esconder%>  >
+            <div class="slide round">M.b.</div>
         </label>
             
         <label class="switchBtn">
-            <input type="checkbox" name="checkBoxes" value="limiteCodigo" <%=limiteCodigo%>  >
-            <div class="slide round">        MultiCOD</div>
+            <input type="checkbox" name="checkBoxes" value="limiteCodigo" <%=limiteCodigo%> <%=esconder%>  >
+            <div class="slide round">MultiCOD</div>
         </label>
         <!--        <button>OK</button>-->
         <br><!-- comment -->
+        <%}%>
         </form>
      <%
      
