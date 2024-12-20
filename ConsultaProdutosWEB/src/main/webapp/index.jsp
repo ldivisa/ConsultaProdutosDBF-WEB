@@ -27,7 +27,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
     <body>
-        <h4>1)Digite o código do produto que deseja pesquisar ou scaneie o EAN13 da etiqueta do produto - 2)Aperte "ENTER" no teclado:</h4>
+<!--        <h4>1)Digite o código do produto que deseja pesquisar ou scaneie o EAN13 da etiqueta do produto - 2)Aperte "ENTER" no teclado:</h4>-->
 <!--         ou clique no botão "OK".-->
 <%
 ArrayList<String> alChecados=new ArrayList<>();  
@@ -40,6 +40,7 @@ alChecados.removeAll(alChecados);
     String opcoes="";
     Boolean esconder=true;
     String esconderCb="";
+    String estoquePositivo="";
     String limiteCodigo="";
     String[] check=null;
     int limiteContagem;
@@ -68,6 +69,13 @@ alChecados.removeAll(alChecados);
                 } else{
                     quad="";
                 }
+        if (alChecados.contains("estoquePositivo")){
+                    estoquePositivo="checked=\"on\"";   
+                    //out.print("Array--quad checked on");
+                } else{
+                    estoquePositivo="";
+                }        
+                
         if (alChecados.contains("ean")){
                     ean="checked=\"on\"";   
                     //out.print("Array--quad checked on");
@@ -100,13 +108,17 @@ alChecados.removeAll(alChecados);
             if (!esconder){%>
         <label class="switchBtn">
             <input type="checkbox" name="checkBoxes" value="quad" <%=quad%> <%=esconder%>>
-            <div class="slide round">EAN</div>
+            <div class="slide round">Estoque</div>
         </label>
         <label class="switchBtn">
             <input type="checkbox" name="checkBoxes" value="ean" <%=ean%> <%=esconder%>>
-            <div class="slide round">Estoque</div>
+            <div class="slide round">EAN</div>
         </label>
-                
+        
+        <label class="switchBtn">
+            <input type="checkbox" name="checkBoxes" value="estoquePositivo" <%=estoquePositivo%> <%=esconder%>>
+            <div class="slide round">Estoque>0</div>
+        </label>    
         <label class="switchBtn">
             <input type="checkbox" name="checkBoxes" value="red" <%=red%> <%=esconder%>  >
             <div class="slide round">M.b.</div>
@@ -121,10 +133,8 @@ alChecados.removeAll(alChecados);
         <%}%>
         </form>
      <%
-     
-     String codigo;
-     
-     codigo = request.getParameter("codigoProduto");
+    String codigo;
+    codigo = request.getParameter("codigoProduto");
      Produtos produtos =null;
      produtos=(Produtos) session.getAttribute("produtos");
      if (produtos==null) 
@@ -184,9 +194,8 @@ alChecados.removeAll(alChecados);
                         out.print("<td><a href=\"index.jsp?ordenacao=mb&codigoProduto="+codigo+complementoCheckBoxes+"\" class=\"link\" accesskey=\"m\">M.B.</a></td></tr></thead><tbody>");
                         else
               out.print("</thead><tbody>");
-        
-                        //out.print("Limite:"+limiteContagem);
-         for(int i=0;i<listaProdutos.size();i++){
+                            //out.print("Limite:"+limiteContagem);
+    for(int i=0;i<listaProdutos.size();i++){
          int contadorSimilaridade=0;
          int contadorExibicao=0;
                 for (String s:palavrasPesquisadas){
@@ -194,9 +203,10 @@ alChecados.removeAll(alChecados);
                         contadorSimilaridade++;}
          }
          if ((contadorSimilaridade==palavrasPesquisadas.size())||((listaProdutos.get(i).getCodigo().contains(codigo))||(listaProdutos.get(i).getEAN13().contains(codigo)))){
-                    contadorExibicao++;
-                    out.println("<tr>");
-                    out.println("<td> "+listaProdutos.get(i).getCodigo()+"</td>");
+         if(!((estoquePositivo.contains("che"))&&(listaProdutos.get(i).getEstoque()<1.00))){
+         contadorExibicao++;
+         out.println("<tr>");
+         out.println("<td> "+listaProdutos.get(i).getCodigo()+"</td>");
                     if(alChecados.contains("ean"))
                     out.println("<td> "+listaProdutos.get(i).getEAN13()+"</td>");
                     out.println("<td> "+listaProdutos.get(i).getNome()+"</td>");
@@ -209,6 +219,7 @@ alChecados.removeAll(alChecados);
                         else
                               out.println("</tr>");
          
+         }
          }
          if (contadorExibicao==limiteContagem){
          //out.print("hora de sair");
