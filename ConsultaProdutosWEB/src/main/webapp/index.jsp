@@ -99,7 +99,6 @@ alChecados.removeAll(alChecados);
                 }
 %>
         <form  action="index.jsp" method="GET">
-        <input type="text" name="codigoProduto" autofocus /><!-- comment -->
         <label class="switchBtn">
             <input type="checkbox" name="checkBoxes" value="opcoes" <%=opcoes%> >
             <div class="slide round">Opções</div>
@@ -131,6 +130,7 @@ alChecados.removeAll(alChecados);
         <!--        <button>OK</button>-->
         <br><!-- comment -->
         <%}%>
+         <input type="text" name="codigoProduto" autofocus /><!-- comment -->
         </form>
      <%
     String codigo;
@@ -194,16 +194,26 @@ alChecados.removeAll(alChecados);
                         out.print("<td><a href=\"index.jsp?ordenacao=mb&codigoProduto="+codigo+complementoCheckBoxes+"\" class=\"link\" accesskey=\"m\">M.B.</a></td></tr></thead><tbody>");
                         else
               out.print("</thead><tbody>");
-                            //out.print("Limite:"+limiteContagem);
+              
+        boolean pesquisaSomenteCodigo = false;
+        if(codigo.length()!=13&&codigo.matches("[0-9]+"))
+                pesquisaSomenteCodigo = true;
+                
     for(int i=0;i<listaProdutos.size();i++){
+        
          int contadorSimilaridade=0;
          int contadorExibicao=0;
                 for (String s:palavrasPesquisadas){
                     if (listaProdutos.get(i).getNome().contains(s.toUpperCase())){
                         contadorSimilaridade++;}
          }
-         if ((contadorSimilaridade==palavrasPesquisadas.size())||((listaProdutos.get(i).getCodigo().contains(codigo))||(listaProdutos.get(i).getEAN13().contains(codigo)))){
-         if(!((estoquePositivo.contains("che"))&&(listaProdutos.get(i).getEstoque()<1.00))){
+         if ((contadorSimilaridade==palavrasPesquisadas.size())
+         ||((listaProdutos.get(i).getCodigo().contains(codigo))
+         ||(pesquisaSomenteCodigo?(listaProdutos.get(i).getCodigo().contains(codigo)):(listaProdutos.get(i).getEAN13().contains(codigo))))){
+         
+         if(!((estoquePositivo.contains("che"))&&(listaProdutos.get(i).getEstoque()<1.00)))
+         
+         {
          contadorExibicao++;
          out.println("<tr>");
          out.println("<td> "+listaProdutos.get(i).getCodigo()+"</td>");
@@ -225,8 +235,8 @@ alChecados.removeAll(alChecados);
          //out.print("hora de sair");
          break;
          }
+         }
          
-         }          
             out.print("</tbody></table></body>");
          
     session.setAttribute("codigo", request.getParameter("codigoProduto"));
