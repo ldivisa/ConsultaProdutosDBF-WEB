@@ -198,39 +198,7 @@ alChecados.removeAll(alChecados);
         boolean pesquisaSomenteCodigo = false;
         if(codigo.length()!=13&&codigo.matches("[0-9]+"))
                 pesquisaSomenteCodigo = true;
-       //
-       if (pesquisaSomenteCodigo){
-       for(int i=0;i<listaProdutos.size();i++){
-            int contadorExibicao=0;
-         if(listaProdutos.get(i).getCodigo().contains(codigo))
-         {         
-         if(!((estoquePositivo.contains("che"))&&(listaProdutos.get(i).getEstoque()<1.00)))
-         
-         {
-         contadorExibicao++;
-         out.println("<tr>");
-         out.println("<td> "+listaProdutos.get(i).getCodigo()+"</td>");
-                    if(alChecados.contains("ean"))
-                    out.println("<td> "+listaProdutos.get(i).getEAN13()+"</td>");
-                    out.println("<td> "+listaProdutos.get(i).getNome()+"</td>");
-                    out.println("<td> "+NumberFormat.getCurrencyInstance().format(listaProdutos.get(i).getPreco())+"</td>");
-                    if(alChecados.contains("quad"))
-                    out.println("<td> "+NumberFormat.getNumberInstance().format(listaProdutos.get(i).getEstoque())+"</td>");
-                    
-                    if(alChecados.contains("red"))
-                              out.println("<td> "+NumberFormat.getCurrencyInstance().format(listaProdutos.get(i).getPreco()-listaProdutos.get(i).getCusto())+"</td>");
-                        else
-                              out.println("</tr>");
-         
-         }
-         }
-         if (contadorExibicao==limiteContagem){
-         //out.print("hora de sair");
-         break;
-         }
-         }
-         }else {
-      //          
+                
     for(int i=0;i<listaProdutos.size();i++){
         
          int contadorSimilaridade=0;
@@ -241,7 +209,7 @@ alChecados.removeAll(alChecados);
          }
          if ((contadorSimilaridade==palavrasPesquisadas.size())
          ||((listaProdutos.get(i).getCodigo().contains(codigo))
-         ||((listaProdutos.get(i).getEAN13().contains(codigo))))){
+         ||(pesquisaSomenteCodigo?(listaProdutos.get(i).getCodigo().contains(codigo)):(listaProdutos.get(i).getEAN13().contains(codigo))))){
          
          if(!((estoquePositivo.contains("che"))&&(listaProdutos.get(i).getEstoque()<1.00)))
          
@@ -268,7 +236,7 @@ alChecados.removeAll(alChecados);
          break;
          }
          }
-         }
+         
             out.print("</tbody></table></body>");
          
     session.setAttribute("codigo", request.getParameter("codigoProduto"));
