@@ -29,6 +29,7 @@
     <body>
 <!--        <h4>1)Digite o código do produto que deseja pesquisar ou scaneie o EAN13 da etiqueta do produto - 2)Aperte "ENTER" no teclado:</h4>-->
 <!--         ou clique no botão "OK".-->
+<br>
 <%
 ArrayList<String> alChecados=new ArrayList<>();  
 alChecados.removeAll(alChecados);
@@ -130,8 +131,11 @@ alChecados.removeAll(alChecados);
         <!--        <button>OK</button>-->
         <br><!-- comment -->
         <%}%>
+        <div>
          <input type="text" name="codigoProduto" autofocus /><!-- comment -->
+        </div>
         </form>
+        <br>
      <%
     String codigo;
     codigo = request.getParameter("codigoProduto");
@@ -183,7 +187,7 @@ alChecados.removeAll(alChecados);
          if(alChecados.contains("quad"))
             complementoCheckBoxes+="&checkBoxes=quad";
           
-         out.print("<table><thead><tr><td><a href=\"index.jsp?ordenacao=codigo&codigoProduto="+codigo+complementoCheckBoxes+"\" class=\"link\" accesskey=\"c\">Código</a></td>");
+         out.print("<br><table><thead><tr><td><a href=\"index.jsp?ordenacao=codigo&codigoProduto="+codigo+complementoCheckBoxes+"\" class=\"link\" accesskey=\"c\">Código</a></td>");
                 if(alChecados.contains("ean"))
                 out.print("<td><a href=\"index.jsp?ordenacao=ean13&codigoProduto="+codigo+complementoCheckBoxes+"\" class=\"link\" accesskey=\"b\">EAN13</a></td>");
                 out.print("<td><a href=\"index.jsp?ordenacao=descricao&codigoProduto="+codigo+complementoCheckBoxes+"\" class=\"link\" accesskey=\"d\">Descritivo</a></td>"+
@@ -273,6 +277,8 @@ alChecados.removeAll(alChecados);
          
     session.setAttribute("codigo", request.getParameter("codigoProduto"));
     session.setAttribute("listaProdutos", listaProdutos);
+         } else{
+         out.print("<h4> Produto não localizado</h4>");
          }
 
      %>

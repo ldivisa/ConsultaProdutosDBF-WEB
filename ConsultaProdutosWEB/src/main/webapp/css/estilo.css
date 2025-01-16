@@ -7,22 +7,38 @@ h4{
     align-content: stretch;
 }
 input[type=text] {
-
-    width:80%;
-    height:20%;
+margin-left:auto;
+  margin-right:auto;
+    width:50%;
+    
     font:Verdana, Geneva, sans-serif;
     font-size:90px;
     align-content: center;
+    align-items: center;
+    justify-content: center;
+    
 }   
 
 input[type=text]:focus {
-  width: 100%;
-  background-color: lightyellow;
+  margin-left:auto;
+  margin-right:auto;
+  width:53%;
+  background-color: blue;
+  color: white;
 }
 
 body{
+    margin-left:auto;
+  margin-right:auto;
     background-color: black;
     color: white;
+    height: 100%;
+    width: 100%;
+    display: block;
+    align-items: center; 
+    justify-content: center; 
+    margin:auto;
+    
     
 }
 thead,header{
@@ -49,10 +65,14 @@ tbody tr {
 }
 
 table {
+  display:block;
+  margin-left:auto;
+  margin-right:auto;
   align-content: center;  
   float: inside;  
   vertical-align: middle;
   text-align: center;
+  justify-content: center;
   font-size: 2.5em;
 
   header{
@@ -62,10 +82,12 @@ table {
 }
 
 .switchBtn {
+    margin-left: 20px;
+    margin-right:20px;
     position: relative;
     display: inline-block;
-    width: 110px;
-    height: 34px;
+    width: 90px;
+    height: 50px;
 }
 .switchBtn input {display:none;}
 .slide {
@@ -84,10 +106,10 @@ table {
 .slide:before {
     position: absolute;
     content: "";
-    height: 26px;
-    width: 26px;
+    height: 20px;
+    width: 20px;
     left: 78px;
-    bottom: 4px;
+    bottom: 2px;
     background-color: white;
     -webkit-transition: .4s;
     transition: .4s;
@@ -111,4 +133,19 @@ input:checked + .slide:before {
 }
 .slide.round:before {
     border-radius: 50%;
+}
+
+div{
+    display:block;
+    width: 100%;
+    height: 20%;
+    margin-left:auto;
+  margin-right:auto;
+    
+    
+    margin-left: 20%; 
+    margin-right: 20%; 
+    
+    
+    
 }
