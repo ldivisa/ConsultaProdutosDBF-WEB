@@ -4,15 +4,19 @@ h4{
     padding-top: 0px;
     margin-bottom: 3px;
     margin-top: 0px;
+    margin-left:auto;
+    margin-right:auto;
     align-content: stretch;
+    text-align: center;
+    font-size:2em;
 }
 input[type=text] {
-margin-left:auto;
-  margin-right:auto;
+    margin-left:20%;
+    margin-right:auto;
     width:50%;
     
     font:Verdana, Geneva, sans-serif;
-    font-size:90px;
+    font-size:3em;
     align-content: center;
     align-items: center;
     justify-content: center;
@@ -20,16 +24,16 @@ margin-left:auto;
 }   
 
 input[type=text]:focus {
-  margin-left:auto;
+  margin-left:20%;
   margin-right:auto;
-  width:53%;
+  
   background-color: blue;
   color: white;
 }
 
 body{
     margin-left:auto;
-  margin-right:auto;
+    margin-right:auto;
     background-color: black;
     color: white;
     height: 100%;
@@ -86,8 +90,8 @@ table {
     margin-right:20px;
     position: relative;
     display: inline-block;
-    width: 90px;
-    height: 50px;
+    width: 120px;
+    height: 60px;
 }
 .switchBtn input {display:none;}
 .slide {
@@ -100,7 +104,7 @@ table {
     background-color: #ccc;
     -webkit-transition: .4s;
     transition: .4s;
-    padding: 8px;
+    padding: 6px;
     color: #fff;
 }
 .slide:before {
@@ -137,14 +141,12 @@ input:checked + .slide:before {
 
 div{
     display:block;
-    width: 100%;
+    width: 80%;
     height: 20%;
-    margin-left:auto;
-  margin-right:auto;
+    margin-left:10%;
+    margin-right:auto;
     
     
-    margin-left: 20%; 
-    margin-right: 20%; 
     
     
     

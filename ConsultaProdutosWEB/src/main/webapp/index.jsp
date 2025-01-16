@@ -45,7 +45,7 @@ alChecados.removeAll(alChecados);
     String limiteCodigo="";
     String[] check=null;
     int limiteContagem;
-    
+    int contadorExibicao = 0;
         check=(String[]) request.getParameterValues("checkBoxes");
        
        if (check!=null)       {
@@ -187,7 +187,7 @@ alChecados.removeAll(alChecados);
          if(alChecados.contains("quad"))
             complementoCheckBoxes+="&checkBoxes=quad";
           
-         out.print("<br><table><thead><tr><td><a href=\"index.jsp?ordenacao=codigo&codigoProduto="+codigo+complementoCheckBoxes+"\" class=\"link\" accesskey=\"c\">Código</a></td>");
+         out.print("<div><br><table><thead><tr><td><a href=\"index.jsp?ordenacao=codigo&codigoProduto="+codigo+complementoCheckBoxes+"\" class=\"link\" accesskey=\"c\">Código</a></td>");
                 if(alChecados.contains("ean"))
                 out.print("<td><a href=\"index.jsp?ordenacao=ean13&codigoProduto="+codigo+complementoCheckBoxes+"\" class=\"link\" accesskey=\"b\">EAN13</a></td>");
                 out.print("<td><a href=\"index.jsp?ordenacao=descricao&codigoProduto="+codigo+complementoCheckBoxes+"\" class=\"link\" accesskey=\"d\">Descritivo</a></td>"+
@@ -205,40 +205,40 @@ alChecados.removeAll(alChecados);
        //
        if (pesquisaSomenteCodigo){
        for(int i=0;i<listaProdutos.size();i++){
-            int contadorExibicao=0;
-         if(listaProdutos.get(i).getCodigo().contains(codigo))
-         {         
-         if(!((estoquePositivo.contains("che"))&&(listaProdutos.get(i).getEstoque()<1.00)))
-         
-         {
+             contadorExibicao=0;
+         if(listaProdutos.get(i).getCodigo().contains(codigo)){         
          contadorExibicao++;
+         if(!((estoquePositivo.contains("che"))&&(listaProdutos.get(i).getEstoque()<1.00))){
          out.println("<tr>");
          out.println("<td> "+listaProdutos.get(i).getCodigo()+"</td>");
-                    if(alChecados.contains("ean"))
+            if(alChecados.contains("ean"))
                     out.println("<td> "+listaProdutos.get(i).getEAN13()+"</td>");
                     out.println("<td> "+listaProdutos.get(i).getNome()+"</td>");
                     out.println("<td> "+NumberFormat.getCurrencyInstance().format(listaProdutos.get(i).getPreco())+"</td>");
-                    if(alChecados.contains("quad"))
+            if(alChecados.contains("quad"))
                     out.println("<td> "+NumberFormat.getNumberInstance().format(listaProdutos.get(i).getEstoque())+"</td>");
                     
-                    if(alChecados.contains("red"))
+            if(alChecados.contains("red"))
                               out.println("<td> "+NumberFormat.getCurrencyInstance().format(listaProdutos.get(i).getPreco()-listaProdutos.get(i).getCusto())+"</td>");
                         else
                               out.println("</tr>");
-         
          }
          }
          if (contadorExibicao==limiteContagem){
-         //out.print("hora de sair");
+                if (contadorExibicao==0)
+                        out.print("<h4>Sem registros encontrados!</h4>");
          break;
          }
          }
+               
+                    if (contadorExibicao==0)
+                               out.print("<h4>Sem registros encontrados! </h4>");
          }else {
       //          
     for(int i=0;i<listaProdutos.size();i++){
         
          int contadorSimilaridade=0;
-         int contadorExibicao=0;
+         contadorExibicao=0;
                 for (String s:palavrasPesquisadas){
                     if (listaProdutos.get(i).getNome().contains(s.toUpperCase())){
                         contadorSimilaridade++;}
@@ -268,18 +268,17 @@ alChecados.removeAll(alChecados);
          }
          }
          if (contadorExibicao==limiteContagem){
-         //out.print("hora de sair");
+                 if (contadorExibicao==0)
+                 out.print("<h4>Sem registros encontrados! </h4>");
          break;
          }
          }
          }
-            out.print("</tbody></table></body>");
+            out.print("</tbody></table></body></div>");
          
     session.setAttribute("codigo", request.getParameter("codigoProduto"));
     session.setAttribute("listaProdutos", listaProdutos);
-         } else{
-         out.print("<h4> Produto não localizado</h4>");
-         }
+         } 
 
      %>
 </html>
